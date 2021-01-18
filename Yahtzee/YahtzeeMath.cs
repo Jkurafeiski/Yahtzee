@@ -13,12 +13,12 @@ namespace Yahtzee
         {
             yahtzeeDictionary = new Dictionary<string, int>()
             {
-                {"Pair", 1},
-                {"DoublePair", 5},
-                {"ThreeOfAKind", 10},
-                {"FourOfAKind", 50},
-                {"Yahtzee", 100},
-                {"FullHouse", 500},
+                {"Pair", },
+                {"DoublePair", },
+                {"ThreeOfAKind", },
+                {"FourOfAKind", },
+                {"Yahtzee", },
+                {"FullHouse", },
                 {"SmallStreet", 15},
                 {"LargeStreet", 20}
             };
