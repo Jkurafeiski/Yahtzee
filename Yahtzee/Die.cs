@@ -1,42 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Yahtzee
 {
     public class Die
     {
-        private Random Randy;
+        private readonly Random _random;
+
+        public int Value { get; set; }
+
+        public int MaxValue { get; private set; }
 
         public Die()
+            : this(6)
         {
         }
 
-        public Die(Random randy)
+        public Die(int maxValue)
         {
-            Randy = randy;
+            MaxValue = maxValue;
+            _random = new Random(DateTime.Now.Millisecond);
+
+            Roll();
         }
 
-        public int[] DiceRandomRoll()
+        public int Roll()
         {
-            var diceNumber1 = Randy.Next(1, 6);
-            var diceNumber2 = Randy.Next(1, 6);
-            var diceNumber3 = Randy.Next(1, 6);
-            var diceNumber4 = Randy.Next(1, 6);
-            var diceNumber5 = Randy.Next(1, 6);
-
-            int[] diceValues = new int[5]
-            {
-                diceNumber1,
-                diceNumber2,
-                diceNumber3,
-                diceNumber4,
-                diceNumber5
-            };
-
-            return diceValues;
+            Value = _random.Next(1, MaxValue + 1);
+            return Value;
         }
 
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
     }
 }

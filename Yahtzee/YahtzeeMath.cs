@@ -13,26 +13,27 @@ namespace Yahtzee
         {
             yahtzeeDictionary = new Dictionary<string, int>()
             {
-                {"Pair", },
-                {"DoublePair", },
-                {"ThreeOfAKind", },
-                {"FourOfAKind", },
-                {"Yahtzee", },
-                {"FullHouse", },
-                {"SmallStreet", 15},
-                {"LargeStreet", 20}
+                //{"Pair", },
+                //{"DoublePair", },
+                //{"ThreeOfAKind", },
+                //{"FourOfAKind", },
+                //{"Yahtzee", },
+                //{"FullHouse", },
+                //{"SmallStreet", 15},
+                //{"LargeStreet", 20}
             };
 
         }
     
         public int YahtzeePointCalculator(string dice)
         {
-            Array.Sort(dice);
+            //Array.Sort(dice);
             
-            if (dice[0] == 0)
-            {
-                throw new ArgumentOutOfRangeException("da stimmt was nicht");
-            }
+            //if (dice[0] == 0)
+            //{
+            //    throw new ArgumentOutOfRangeException("da stimmt was nicht");
+            //}
+            return 0;
         }
     }
 }

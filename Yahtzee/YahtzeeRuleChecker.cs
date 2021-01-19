@@ -2,14 +2,19 @@
 
 namespace Yahtzee
 {
-    public class MathChecker
+    public class YahtzeeRuleChecker
     {
-        public MathChecker(int[] die)
+        public YahtzeeRuleChecker()
+        {
+            
+        }
+
+        public YahtzeeRuleChecker(int[] die)
         {
             new YahtzeeMath().YahtzeePointCalculator(AllChecker(die));
         }
 
-        private string AllChecker(int[] die)
+        public string AllChecker(int[] die)
         {
             string statusCheck = "";
             if (PairCheck(die))
@@ -55,7 +60,7 @@ namespace Yahtzee
             return statusCheck;
         }
 
-        private bool PairCheck(int[] die)
+        public bool PairCheck(int[] die)
         {
             if (die.GroupBy(x => x).Any(g => g.Count() == 2))
             {
@@ -65,7 +70,7 @@ namespace Yahtzee
             return false;
         }
 
-        private bool DoublePairCheck(int[] die)
+        public bool DoublePairCheck(int[] die)
         {
             if (die.GroupBy(x => x).Any(g => g.Count() == 2) && die.GroupBy(x => x).Any(g => g.Count() == 2))
             {
@@ -75,7 +80,7 @@ namespace Yahtzee
             return false;
         }
 
-        private bool ThreeOfAKindCheck(int[] die)
+        public bool ThreeOfAKindCheck(int[] die)
         {
             if (die.GroupBy(x => x).Any(g => g.Count() == 3))
             {
@@ -95,7 +100,7 @@ namespace Yahtzee
             return false;
         }
 
-        internal bool YahtzeeCheck(int[] die)
+        public bool YahtzeeCheck(int[] die)
         {
             if (die.GroupBy(x => x).Any(g => g.Count() == 5))
             {
@@ -115,7 +120,7 @@ namespace Yahtzee
             return false;
         }
 
-        private bool SmallStreetCheck(int[] die)
+        public bool SmallStreetCheck(int[] die)
         {
             if (die[0] == 1 && die[1] == 2 && die[1] == 3 && die[2] == 4 && die[4] == 5)
             {
@@ -125,7 +130,7 @@ namespace Yahtzee
             return false;
         }
 
-        private bool Largestreetcheck(int[] die)
+        public bool Largestreetcheck(int[] die)
         {
             if (die[0] == 2 && die[1] == 3 && die[1] == 4 && die[2] == 5 && die[4] == 6)
             {
