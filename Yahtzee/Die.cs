@@ -8,10 +8,7 @@ namespace Yahtzee
     public class Die
     {
         private Random Randy;
-
-        public Die()
-        {
-        }
+    
 
         public Die(Random randy)
         {
