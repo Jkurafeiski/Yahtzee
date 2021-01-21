@@ -35,5 +35,11 @@ namespace Yahtzee
             return diceValues;
         }
 
+        public int DiceRandomReRoll()
+        {
+           var diceReRoll = _random.Next(1, 7);
+           return diceReRoll;
+        }
+
     }
 }

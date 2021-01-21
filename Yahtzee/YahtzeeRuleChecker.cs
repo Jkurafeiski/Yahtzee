@@ -1,68 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Yahtzee
 {
-    public class YahtzeeRuleChecker
+
+    public class YahtzeeRuleChecker : IEnumerable
     {
-        public YahtzeeRuleChecker()
-        {
-            
-        }
-
-        public YahtzeeRuleChecker(int[] die)
-        {
-            new YahtzeeMath().YahtzeePointCalculator(AllChecker(die));
-        }
-
-        public string AllChecker(int[] die)
-        {
-            string statusCheck = "";
-            if (PairCheck(die))
-            {
-                statusCheck = "Pair";
-            }
-
-            if (DoublePairCheck(die))
-            {
-                statusCheck = "DoublePair";
-            }
-
-            if (ThreeOfAKindCheck(die))
-            {
-                statusCheck = "ThreeOfAKind";
-            }
-
-            if (FourOfAKindCheck(die))
-            {
-                statusCheck = "FourOfAKind";
-            }
-
-            if (YahtzeeCheck(die))
-            {
-                statusCheck = "Yahtzee";
-            }
-
-            if (FullHouseCheck(die))
-            {
-                statusCheck = "FullHouse";
-            }
-
-            if (SmallStreetCheck(die))
-            {
-                statusCheck = "SmallStreet";
-            }
-
-            if (Largestreetcheck(die))
-            {
-                statusCheck = "LargeStreet";
-            }
-
-            return statusCheck;
-        }
-
         public bool PairCheck(int[] die)
         {
-            if (die.GroupBy(x => x).Any(g => g.Count() == 2))
+            if (die.GroupBy(x => x).Any(g => g.Count() >= 2))
             {
                 return true;
             }
@@ -72,9 +20,15 @@ namespace Yahtzee
 
         public bool DoublePairCheck(int[] die)
         {
-            if (die.GroupBy(x => x).Any(g => g.Count() == 2) && die.GroupBy(x => x).Any(g => g.Count() == 2))
+            if (die.GroupBy(x => x).Any(g => g.Count() > 1))
             {
-                return true;
+                var duplicates = die.GroupBy(g => g).Where(w => w.Count() > 1).Select(s => s.Key).ToList();
+                duplicates.Remove(duplicates[0]);
+
+                if (duplicates.Count != 0)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -82,7 +36,7 @@ namespace Yahtzee
 
         public bool ThreeOfAKindCheck(int[] die)
         {
-            if (die.GroupBy(x => x).Any(g => g.Count() == 3))
+            if (die.GroupBy(x => x).Any(g => g.Count() >= 3))
             {
                 return true;
             }
@@ -92,7 +46,7 @@ namespace Yahtzee
 
         public bool FourOfAKindCheck(int[] die)
         {
-            if (die.GroupBy(x => x).Any(g => g.Count() == 4))
+            if (die.GroupBy(x => x).Any(g => g.Count() >= 4))
             {
                 return true;
             }
@@ -122,7 +76,7 @@ namespace Yahtzee
 
         public bool SmallStreetCheck(int[] die)
         {
-            if (die[0] == 1 && die[1] == 2 && die[1] == 3 && die[2] == 4 && die[4] == 5)
+            if (die[0] == 1 && die[1] == 2 && die[2] == 3 && die[3] == 4 && die[4] == 5)
             {
                 return true;
             }
@@ -130,14 +84,19 @@ namespace Yahtzee
             return false;
         }
 
-        public bool Largestreetcheck(int[] die)
+        public bool LargeStreetCheck(int[] die)
         {
-            if (die[0] == 2 && die[1] == 3 && die[1] == 4 && die[2] == 5 && die[4] == 6)
+            if (die[0] == 2 && die[1] == 3 && die[2] == 4 && die[3] == 5 && die[4] == 6)
             {
                 return true;
             }
 
             return false;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
