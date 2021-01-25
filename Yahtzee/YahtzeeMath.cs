@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Yahtzee
@@ -78,78 +77,6 @@ namespace Yahtzee
                     break;
             }
             return false;
-        }
-    }
-
-    public class ScoreCalculator
-    {
-        private int sum = 0;
-        public int SumScore(int[] dieChecked)
-        {
-            foreach (var t in dieChecked)
-            {
-                sum += t;
-            }
-            return sum;
-        }
-
-        public int PairScore(int[] dieChecked)
-        {
-            var duplicates = dieChecked.GroupBy(g => g).Where(w => w.Count() > 1).Select(s => s.Key).ToList();
-            foreach (var number in duplicates)
-            {
-                sum = number * 2;
-            }
-
-            return sum;
-        }
-
-        public int ThreeOfAKindScore(int[] dieChecked)
-        {
-            var duplicates = dieChecked.GroupBy(g => g).Where(w => w.Count() > 2).Select(s => s.Key).ToList();
-            foreach (var number in duplicates)
-            {
-                sum = number * 3;
-            }
-
-            return sum;
-        }
-
-        public int DoublePairScore(int[] dieChecked)
-        {
-            var duplicates = dieChecked.GroupBy(g => g).Where(w => w.Count() > 1).Select(s => s.Key).ToList();
-            foreach (var number in duplicates)
-            {
-                sum += number * 2;
-            }
-
-            return sum;
-        }
-
-        public int FourOfAKindScore(int[] dieChecked)
-        {
-            var duplicates = dieChecked.GroupBy(g => g).Where(w => w.Count() > 3).Select(s => s.Key).ToList();
-            foreach (var number in duplicates)
-            {
-                sum = number * 4;
-            }
-
-            return sum;
-        }
-
-        public int FullHouseScore(int[] dieChecked)
-        {
-            if (dieChecked[1] == dieChecked[0] && dieChecked[0] != dieChecked[2])
-            {
-               sum = (dieChecked[1] + dieChecked[1]) + (dieChecked[3] * 3);
-            }
-
-            if (dieChecked[3] == dieChecked[4] && dieChecked[3] != dieChecked[2])
-            {
-                sum = (dieChecked[3] + dieChecked[3]) + (dieChecked[1] * 3);
-            }
-
-            return sum;
         }
     }
 }

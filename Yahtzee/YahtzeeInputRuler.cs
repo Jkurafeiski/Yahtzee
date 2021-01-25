@@ -2,7 +2,6 @@
 {
     public enum YahtzeeInputRuler
     {
-        DiceReroll = 0,
         Sum = 1,
         Pair = 2,
         ThreeOfAKind = 3,
@@ -12,14 +11,5 @@
         SmallStreet = 7,
         LargeStreet = 8,
         DoublePair = 9,
-    }
-
-    public enum YahtzeeDiceReroll
-    {
-        die1 = 10,
-        die2 = 20,
-        die3 = 30,
-        die4 = 40,
-        die5 = 50,
     }
 }

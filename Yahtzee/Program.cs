@@ -5,7 +5,6 @@ namespace Yahtzee
 {
     class Program
     {
-        private static int[] _initializeDice;
         private static bool reRollRun = false;
         private static int[] scoreValue;
         private static readonly Dice Dice = new Dice();
@@ -42,28 +41,38 @@ namespace Yahtzee
             }*/
         }
 
-        private static void GameBoardRun(int[] _initializeDice, bool reRollRun)
+        private static void GameBoardRun(int[] initializeDice, bool reRollRun)
         {
             int score = 0;
             
             if (!reRollRun)
             {
-                _initializeDice = Dice.DiceRandomRoll();
+                initializeDice = Dice.DiceRandomRoll();
             }
 
-            foreach (var dieRolls in _initializeDice)
+            foreach (var dieRolls in initializeDice)
             {
                 Console.Write(dieRolls + " ");
             }
 
             ShowPossibleInputs();
 
-            var userInput = Console.ReadLine();
+            var userInput = Console.ReadLine()?.ToUpper();
             Console.Clear();
+            if (userInput.StartsWith("R"))
+            {
+                var reRollDie = Convert.ToInt32(userInput.Substring(1, 1));
+                if (reRollDie >= 1 && reRollDie <= 5)
+                {
+                    initializeDice[reRollDie - 1] = Dice.DiceRandomReRoll();
+                    reRollRun = true;
+                    return;
+                }
+            }
             int convertedInput = YahtzeeInputHandler(userInput);
             if (convertedInput == 0)
             {
-                DiceReRollChecker(userInput, _initializeDice);
+                DiceReRollChecker(userInput, initializeDice);
             }
 
 
