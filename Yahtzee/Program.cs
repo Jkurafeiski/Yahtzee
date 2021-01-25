@@ -5,7 +5,7 @@ namespace Yahtzee
 {
     class Program
     {
-        private static bool reRollRun = false;
+        private static bool _reRollRun = false;
         private static int[] scoreValue;
         private static readonly Dice Dice = new Dice();
         private static readonly List<int> ScoreList = new List<int>();
@@ -38,11 +38,12 @@ namespace Yahtzee
             Console.Clear();
             if (userInput.StartsWith("R"))
             {
-                DiceReRollHandler(initializeDice, userInput);
+                var convertedRerollDices = DiceReRollConverter(userInput);
+                DiceReRollHandler(convertedRerollDices, initializeDice);
             }
 
             int convertedInput = YahtzeeInputHandler(userInput);
-            DiceReRollChecker(userInput, initializeDice);
+            
             
 
             ScoreList.Add(convertedInput);
@@ -55,30 +56,33 @@ namespace Yahtzee
             Console.WriteLine("Deine Punkte sind " + score);
         }
 
-        private static int[] DiceReRollHandler(int[] initializeDice, string userInput)
+        private static int[] DiceReRollHandler(int[] diceToReRoll, int[] initializeDice)
         {
-            var reRollDie = Convert.ToInt32(userInput.Substring(1, 1));
-            if (reRollDie >= 1 && reRollDie <= 5)
+            foreach (var reRoll in diceToReRoll)
             {
-                initializeDice[reRollDie - 1] = Dice.DiceRandomReRoll();
-                reRollRun = true;
-                return initializeDice;
+                initializeDice[reRoll - 1] = Dice.DiceRandomReRoll();
             }
-            throw new ArgumentOutOfRangeException("userInput", "Da ist was schief gelaufen mit der zahl nach dem R");
+            _reRollRun = true;
+            GameBoardRun(initializeDice, _reRollRun);
+            return initializeDice;
+            
         }
 
-        private static void DiceReRollChecker(string userInput, int[] _initializeDice)
+        private static int[] DiceReRollConverter(string userInput)
         {
-            if (DiceReRollHandler(_initializeDice, userInput) == null)
+            List<int> reRollDiceList = new List<int>();
+            var reRollDie = userInput.Substring(1, userInput.Length-1).ToCharArray();
+            foreach (var die in reRollDie)
             {
-                Console.WriteLine("Schreib schon was richtiges!");
+                var charArrayConvertedToInt = (int) char.GetNumericValue(die);
+                if (charArrayConvertedToInt >= 1 && charArrayConvertedToInt <= 5)
+                {
+                 reRollDiceList.Add(charArrayConvertedToInt);
+                }
             }
+            int[] reRollDiceArray = reRollDiceList.ToArray();
+            return reRollDiceArray;
 
-            var reRolledDices = DiceReRollHandler(_initializeDice, userInput);
-            _initializeDice = reRolledDices;
-            Console.WriteLine(_initializeDice);
-            GameBoardRun(_initializeDice, true);
-            
         }
 
         private static void ShowPossibleInputs()
@@ -116,7 +120,7 @@ namespace Yahtzee
                 return yahtzeeResult;
             }
 
-            throw new ArgumentOutOfRangeException("NotTheNumber", "Das ist keine gültige Nummer");
+            throw new ArgumentOutOfRangeException("yahtzeeResult", "Das ist keine gültige Nummer");
         }
     }
 }

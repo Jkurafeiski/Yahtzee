@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Yahtzee
 {
@@ -23,7 +20,7 @@ namespace Yahtzee
             var diceNumber4 = _random.Next(1, 7);
             var diceNumber5 = _random.Next(1, 7);
 
-            int[] diceValues = new int[5]
+            int[] diceValues = new int[]
             {
                 diceNumber1,
                 diceNumber2,
