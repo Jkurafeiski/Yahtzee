@@ -42,11 +42,11 @@ namespace Yahtzee
                 DiceReRollHandler(convertedRerollDices, initializeDice);
             }
 
-            int convertedInput = YahtzeeInputHandler(userInput);
-            
+            YahtzeeInputRuler convertedInput = YahtzeeInputHandler(userInput);
+            var scoreValuesAfterCalc = new YahtzeeMath().YahtzeePointCalculator(initializeDice,convertedInput);
             
 
-            ScoreList.Add(convertedInput);
+            ScoreList.Add(scoreValuesAfterCalc);
             foreach (int number in ScoreList)
             {
                 score += number;
@@ -101,7 +101,7 @@ namespace Yahtzee
             Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein r davor");
         }
 
-        private static int YahtzeeInputHandler(string input)
+        private static YahtzeeInputRuler YahtzeeInputHandler(string input)
         {
             if (int.TryParse(input, out int yahtzeeResult))
             {
@@ -112,12 +112,12 @@ namespace Yahtzee
 
         }
 
-        private static int YahtzeeEnumChecker(int yahtzeeResult)
+        private static YahtzeeInputRuler YahtzeeEnumChecker(int yahtzeeResult)
         {
             if (Enum.IsDefined(typeof(YahtzeeInputRuler), yahtzeeResult))
             {
                 YahtzeeInputRuler myYahtzee = (YahtzeeInputRuler) yahtzeeResult;
-                return yahtzeeResult;
+                return myYahtzee;
             }
 
             throw new ArgumentOutOfRangeException("yahtzeeResult", "Das ist keine gültige Nummer");
