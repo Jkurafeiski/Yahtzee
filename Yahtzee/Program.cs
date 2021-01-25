@@ -16,29 +16,6 @@ namespace Yahtzee
             {
                 GameBoardRun(null, false);
             }
-            
-
-
-            /*var die = new Die();
-            Console.WriteLine("Neuer Würfel: " + die.Value);
-            Console.WriteLine("Neu würfeln:");
-            var rolls = new Dictionary<int, int>();
-            for (var i = 1; i <= 6; i++)
-            { 
-                rolls[i] = 0;
-            }
-            
-            for (var i = 0; i < 60000; i++)
-            {
-                die.Roll();
-                rolls[die.Value]++;
-                //Console.WriteLine("Wert nach " + i + ". Wurf: " + die.Value);
-            }
-            
-            for (var i = 1; i <= 6; i++)
-            {
-                Console.WriteLine("Zahl " + i + " wurde " + rolls[i] + " mal geworfen.");
-            }*/
         }
 
         private static void GameBoardRun(int[] initializeDice, bool reRollRun)
@@ -61,21 +38,12 @@ namespace Yahtzee
             Console.Clear();
             if (userInput.StartsWith("R"))
             {
-                var reRollDie = Convert.ToInt32(userInput.Substring(1, 1));
-                if (reRollDie >= 1 && reRollDie <= 5)
-                {
-                    initializeDice[reRollDie - 1] = Dice.DiceRandomReRoll();
-                    reRollRun = true;
-                    return;
-                }
+                DiceReRollHandler(initializeDice, userInput);
             }
+
             int convertedInput = YahtzeeInputHandler(userInput);
-            if (convertedInput == 0)
-            {
-                DiceReRollChecker(userInput, initializeDice);
-            }
-
-
+            DiceReRollChecker(userInput, initializeDice);
+            
 
             ScoreList.Add(convertedInput);
             foreach (int number in ScoreList)
@@ -87,56 +55,30 @@ namespace Yahtzee
             Console.WriteLine("Deine Punkte sind " + score);
         }
 
+        private static int[] DiceReRollHandler(int[] initializeDice, string userInput)
+        {
+            var reRollDie = Convert.ToInt32(userInput.Substring(1, 1));
+            if (reRollDie >= 1 && reRollDie <= 5)
+            {
+                initializeDice[reRollDie - 1] = Dice.DiceRandomReRoll();
+                reRollRun = true;
+                return initializeDice;
+            }
+            throw new ArgumentOutOfRangeException("userInput", "Da ist was schief gelaufen mit der zahl nach dem R");
+        }
+
         private static void DiceReRollChecker(string userInput, int[] _initializeDice)
         {
-            if (DiceReRollHandler(userInput, _initializeDice) == null)
+            if (DiceReRollHandler(_initializeDice, userInput) == null)
             {
                 Console.WriteLine("Schreib schon was richtiges!");
             }
 
-            var reRolledDices = DiceReRollHandler(userInput, _initializeDice);
+            var reRolledDices = DiceReRollHandler(_initializeDice, userInput);
             _initializeDice = reRolledDices;
             Console.WriteLine(_initializeDice);
             GameBoardRun(_initializeDice, true);
             
-        }
-
-        private static int[] DiceReRollHandler(string input, int[] oldRoles)
-        {
-            if (input == "r1")
-            {
-                var newRoll = Dice.DiceRandomReRoll();
-                oldRoles[0] = newRoll;
-                return oldRoles;
-            }
-            else if (input == "r2")
-            {
-                var newRoll = Dice.DiceRandomReRoll();
-                oldRoles[1] = newRoll;
-                return oldRoles;
-            }
-            else if (input == "r3")
-            {
-                var newRoll = Dice.DiceRandomReRoll();
-                oldRoles[2] = newRoll;
-                return oldRoles;
-            }
-            else if (input == "r4")
-            {
-                var newRoll = Dice.DiceRandomReRoll();
-                oldRoles[3] = newRoll;
-                return oldRoles;
-            }
-            else if (input == "r5")
-            {
-                var newRoll = Dice.DiceRandomReRoll();
-                oldRoles[4] = newRoll;
-                return oldRoles;
-            }
-            else
-            {
-                return null;
-            }
         }
 
         private static void ShowPossibleInputs()
@@ -161,10 +103,8 @@ namespace Yahtzee
             {
                 return YahtzeeEnumChecker(yahtzeeResult);
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
 
         }
 
@@ -175,10 +115,8 @@ namespace Yahtzee
                 YahtzeeInputRuler myYahtzee = (YahtzeeInputRuler) yahtzeeResult;
                 return yahtzeeResult;
             }
-            else
-            {
-                throw new ArgumentOutOfRangeException("NotTheNumber", "Das ist keine gültige Nummer");
-            }
+
+            throw new ArgumentOutOfRangeException("NotTheNumber", "Das ist keine gültige Nummer");
         }
     }
 }

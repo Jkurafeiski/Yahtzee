@@ -42,6 +42,10 @@ namespace Yahtzee
         {
             var sum = 0;
             var duplicates = dieChecked.GroupBy(g => g).Where(w => w.Count() > 1).Select(s => s.Key).ToList();
+            if (duplicates.Count == 1)
+            {
+                return 0;
+            }
             foreach (var number in duplicates)
             {
                 sum += number * 2;
@@ -65,12 +69,12 @@ namespace Yahtzee
         public int FullHouseScore(int[] dieChecked)
         {
             var sum = 0;
-            if (dieChecked[1] == dieChecked[0] && dieChecked[0] != dieChecked[2])
+            if (dieChecked[1] == dieChecked[0] && dieChecked[0] != dieChecked[2] && dieChecked[2] == dieChecked[3] && dieChecked[3] == dieChecked[4])
             {
                 sum = (dieChecked[1] + dieChecked[1]) + (dieChecked[3] * 3);
             }
 
-            if (dieChecked[3] == dieChecked[4] && dieChecked[3] != dieChecked[2])
+            if (dieChecked[3] == dieChecked[4] && dieChecked[3] != dieChecked[2] && dieChecked[0] == dieChecked[1] && dieChecked[1] == dieChecked[2])
             {
                 sum = (dieChecked[3] + dieChecked[3]) + (dieChecked[1] * 3);
             }
