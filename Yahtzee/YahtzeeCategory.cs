@@ -1,6 +1,6 @@
 ﻿namespace Yahtzee
 {
-    public enum YahtzeeInputRuler
+    public enum YahtzeeCategory
     {
         Sum = 1,
         Pair = 2,

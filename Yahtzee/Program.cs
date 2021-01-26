@@ -14,11 +14,15 @@ namespace Yahtzee
         {
             for (int reRuns = 0; reRuns < 10; reRuns++)
             {
-                GameBoardRun(null, false);
+                var wantsToContinue = GameBoardRun(null, false);
+                if (!wantsToContinue)
+                {
+                    break;
+                }
             }
         }
 
-        private static void GameBoardRun(int[] initializeDice, bool reRollRun)
+        private static bool GameBoardRun(int[] initializeDice, bool reRollRun)
         {
             int score = 0;
             
@@ -35,25 +39,36 @@ namespace Yahtzee
             ShowPossibleInputs();
 
             var userInput = Console.ReadLine()?.ToUpper();
+            var inputParser = new InputParser();
             Console.Clear();
-            if (userInput.StartsWith("R"))
+            var selectedOption = inputParser.ParseInput(userInput);
+            if (selectedOption == InputParser.Option.ReRoll)
             {
-                var convertedRerollDices = DiceReRollConverter(userInput);
+                var convertedRerollDices = inputParser.GetDiceForReroll(userInput);
                 DiceReRollHandler(convertedRerollDices, initializeDice);
             }
-
-            YahtzeeInputRuler convertedInput = YahtzeeInputHandler(userInput);
-            var scoreValuesAfterCalc = new YahtzeeMath().YahtzeePointCalculator(initializeDice,convertedInput);
-            
-
-            ScoreList.Add(scoreValuesAfterCalc);
-            foreach (int number in ScoreList)
+            else if (selectedOption == InputParser.Option.Quit)
             {
-                score += number;
+                return false;
+            }
+            else if (selectedOption == InputParser.Option.Category)
+            {
+                YahtzeeCategory selectedCategory = inputParser.GetSelectedCategory(userInput);
+
+                var scoreValuesAfterCalc = new YahtzeeMath().YahtzeePointCalculator(initializeDice, selectedCategory);
+
+
+                ScoreList.Add(scoreValuesAfterCalc);
+                foreach (int number in ScoreList)
+                {
+                    score += number;
+                }
+
+                reRollRun = false;
+                Console.WriteLine("Deine Punkte sind " + score);
             }
 
-            reRollRun = false;
-            Console.WriteLine("Deine Punkte sind " + score);
+            return true;
         }
 
         private static int[] DiceReRollHandler(int[] diceToReRoll, int[] initializeDice)
@@ -101,7 +116,7 @@ namespace Yahtzee
             Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein r davor");
         }
 
-        private static YahtzeeInputRuler YahtzeeInputHandler(string input)
+        private static YahtzeeCategory YahtzeeInputHandler(string input)
         {
             if (int.TryParse(input, out int yahtzeeResult))
             {
@@ -112,11 +127,11 @@ namespace Yahtzee
 
         }
 
-        private static YahtzeeInputRuler YahtzeeEnumChecker(int yahtzeeResult)
+        private static YahtzeeCategory YahtzeeEnumChecker(int yahtzeeResult)
         {
-            if (Enum.IsDefined(typeof(YahtzeeInputRuler), yahtzeeResult))
+            if (Enum.IsDefined(typeof(YahtzeeCategory), yahtzeeResult))
             {
-                YahtzeeInputRuler myYahtzee = (YahtzeeInputRuler) yahtzeeResult;
+                YahtzeeCategory myYahtzee = (YahtzeeCategory) yahtzeeResult;
                 return myYahtzee;
             }
 

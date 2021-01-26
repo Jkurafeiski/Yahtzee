@@ -20,7 +20,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.Sum);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.Sum);
 
             Assert.AreEqual(expected, actual);
         }
@@ -30,7 +30,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.Pair);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.Pair);
 
             Assert.AreEqual(expected, actual);
         }
@@ -41,7 +41,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.ThreeOfAKind);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.ThreeOfAKind);
 
             Assert.AreEqual(expected, actual);
         }
@@ -52,7 +52,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.FourOfAKind);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.FourOfAKind);
 
             Assert.AreEqual(expected, actual);
         }
@@ -63,7 +63,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.Yahtzee);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.Yahtzee);
 
             Assert.AreEqual(expected, actual);
         }
@@ -74,7 +74,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.FullHouse);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.FullHouse);
 
             Assert.AreEqual(expected, actual);
         }
@@ -84,7 +84,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.SmallStreet);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.SmallStreet);
 
             Assert.AreEqual(expected, actual);
         }
@@ -94,7 +94,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.LargeStreet);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.LargeStreet);
 
             Assert.AreEqual(expected, actual);
         }
@@ -105,7 +105,7 @@ namespace YahtzeeTest
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
 
-            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeInputRuler.DoublePair);
+            var actual = _sut.YahtzeePointCalculator(diceRoll, YahtzeeCategory.DoublePair);
 
             Assert.AreEqual(expected, actual);
         }

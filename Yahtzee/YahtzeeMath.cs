@@ -7,7 +7,7 @@ namespace Yahtzee
     public class YahtzeeMath
     {
         
-        public int YahtzeePointCalculator(int[] dice, YahtzeeInputRuler input)
+        public int YahtzeePointCalculator(int[] dice, YahtzeeCategory input)
         {
             var scoreValue = 0;
             Array.Sort(dice);
@@ -15,28 +15,28 @@ namespace Yahtzee
             {
                 switch (input)
                 {
-                    case YahtzeeInputRuler.Sum:
+                    case YahtzeeCategory.Sum:
                         scoreValue= new ScoreCalculator().SumScore(dice);
                         return scoreValue;
-                    case YahtzeeInputRuler.Pair:
+                    case YahtzeeCategory.Pair:
                         scoreValue= new ScoreCalculator().PairScore(dice);
                         return scoreValue;
-                    case YahtzeeInputRuler.ThreeOfAKind:
+                    case YahtzeeCategory.ThreeOfAKind:
                         scoreValue= new ScoreCalculator().ThreeOfAKindScore(dice);
                         return scoreValue;
-                    case YahtzeeInputRuler.FourOfAKind:
+                    case YahtzeeCategory.FourOfAKind:
                         scoreValue= new ScoreCalculator().FourOfAKindScore(dice);
                         return scoreValue;
-                    case YahtzeeInputRuler.Yahtzee:
+                    case YahtzeeCategory.Yahtzee:
                         return 50;
-                    case YahtzeeInputRuler.FullHouse:
+                    case YahtzeeCategory.FullHouse:
                         scoreValue= new ScoreCalculator().FullHouseScore(dice);
                         return scoreValue;
-                    case YahtzeeInputRuler.SmallStreet:
+                    case YahtzeeCategory.SmallStreet:
                         return 15;
-                    case YahtzeeInputRuler.LargeStreet:
+                    case YahtzeeCategory.LargeStreet:
                         return 20;
-                    case YahtzeeInputRuler.DoublePair:
+                    case YahtzeeCategory.DoublePair:
                         scoreValue= new ScoreCalculator().DoublePairScore(dice);
                         return scoreValue;
                 }
@@ -45,34 +45,34 @@ namespace Yahtzee
             return scoreValue;
         }
 
-        private bool SwitchInputCheck(int[] dice,YahtzeeInputRuler input)
+        private bool SwitchInputCheck(int[] dice,YahtzeeCategory input)
         {
             switch (input)
             {
-                case YahtzeeInputRuler.Sum:
+                case YahtzeeCategory.Sum:
                     return true;
-                case YahtzeeInputRuler.Pair:
+                case YahtzeeCategory.Pair:
                     if (new YahtzeeRuleChecker().PairCheck(dice)) return true;
                     break;
-                case YahtzeeInputRuler.ThreeOfAKind:
+                case YahtzeeCategory.ThreeOfAKind:
                     if (new YahtzeeRuleChecker().ThreeOfAKindCheck(dice)) return true;
                     break;
-                case YahtzeeInputRuler.FourOfAKind:
+                case YahtzeeCategory.FourOfAKind:
                     if (new YahtzeeRuleChecker().FourOfAKindCheck(dice)) return true;
                     break;
-                case YahtzeeInputRuler.Yahtzee:
+                case YahtzeeCategory.Yahtzee:
                     if (new YahtzeeRuleChecker().YahtzeeCheck(dice)) return true;
                     break;
-                case YahtzeeInputRuler.FullHouse:
+                case YahtzeeCategory.FullHouse:
                     if (new YahtzeeRuleChecker().FullHouseCheck(dice)) return true;
                     break;
-                case YahtzeeInputRuler.SmallStreet:
+                case YahtzeeCategory.SmallStreet:
                     if (new YahtzeeRuleChecker().SmallStreetCheck(dice)) return true;
                     break;
-                case YahtzeeInputRuler.LargeStreet:
+                case YahtzeeCategory.LargeStreet:
                     if (new YahtzeeRuleChecker().LargeStreetCheck(dice)) return true;
                     break;
-                case YahtzeeInputRuler.DoublePair:
+                case YahtzeeCategory.DoublePair:
                     if (new YahtzeeRuleChecker().DoublePairCheck(dice)) return true;
                     break;
             }
