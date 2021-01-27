@@ -18,14 +18,27 @@ namespace Yahtzee
             }
         }
 
+        
+
         public void AddScore(YahtzeeCategory category, int points)
         {
+            if (_scores[category] != null)
+            {
+                throw new ScoreBoardException("Hast du schon ausgewählt");
+            }
+            
+            _scores[category] = points;
 
+            
         }
 
         public void ScratchCategory(YahtzeeCategory category)
         {
-
+            if (_scores[category] != null)
+            {
+                throw new ScoreBoardException("Du kannst nicht etwas Streichen was schon eine Nummer hat");
+            }
+            _scores[category] = 0;
         }
 
         public void Reset()
@@ -38,9 +51,18 @@ namespace Yahtzee
             return _scores[category];
         }
 
-        public int TotalScore()
+        public int TotalScore(int points)
         {
-            return 0;
+            var totalScore = new YahtzeeMath().ScoreCounter(points);
+            return totalScore;
+        }
+        public void PrintScoreBoard(int points)
+        {
+            Console.WriteLine(TotalScore(points));
+            foreach (KeyValuePair<YahtzeeCategory, int?> kvp in _scores)
+            {
+                Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
+            }
         }
     }
 }

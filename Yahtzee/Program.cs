@@ -6,15 +6,14 @@ namespace Yahtzee
     class Program
     {
         private static bool _reRollRun = false;
-        private static int[] scoreValue;
         private static readonly Dice Dice = new Dice();
         private static readonly List<int> ScoreList = new List<int>();
-
+        private ScoreBoard scoreBoard = new ScoreBoard();
         static void Main()
         {
             for (int reRuns = 0; reRuns < 10; reRuns++)
             {
-                var wantsToContinue = GameBoardRun(null, false);
+                var wantsToContinue = new Program().GameBoardRun(null, false);
                 if (!wantsToContinue)
                 {
                     break;
@@ -22,10 +21,9 @@ namespace Yahtzee
             }
         }
 
-        private static bool GameBoardRun(int[] initializeDice, bool reRollRun)
+        private bool GameBoardRun(int[] initializeDice, bool reRollRun)
         {
             int score = 0;
-            
             if (!reRollRun)
             {
                 initializeDice = Dice.DiceRandomRoll();
@@ -56,6 +54,7 @@ namespace Yahtzee
                 YahtzeeCategory selectedCategory = inputParser.GetSelectedCategory(userInput);
 
                 var scoreValuesAfterCalc = new YahtzeeMath().YahtzeePointCalculator(initializeDice, selectedCategory);
+                scoreBoard.AddScore(selectedCategory,scoreValuesAfterCalc);
 
 
                 ScoreList.Add(scoreValuesAfterCalc);
@@ -63,9 +62,9 @@ namespace Yahtzee
                 {
                     score += number;
                 }
-
+                scoreBoard.PrintScoreBoard(score);
                 reRollRun = false;
-                Console.WriteLine("Deine Punkte sind " + score);
+                //Console.WriteLine("Deine Punkte sind " + score);
             }
 
             return true;
@@ -78,7 +77,7 @@ namespace Yahtzee
                 initializeDice[reRoll - 1] = Dice.DiceRandomReRoll();
             }
             _reRollRun = true;
-            GameBoardRun(initializeDice, _reRollRun);
+            new Program().GameBoardRun(initializeDice, _reRollRun);
             return initializeDice;
             
         }

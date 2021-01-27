@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace Yahtzee
 {
@@ -77,6 +75,12 @@ namespace Yahtzee
                     break;
             }
             return false;
+        }
+
+        public int ScoreCounter(int newPoints)
+        {
+            var sum = newPoints;
+            return sum;
         }
     }
 }
