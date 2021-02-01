@@ -11,9 +11,10 @@ namespace Yahtzee
         private ScoreBoard scoreBoard = new ScoreBoard();
         static void Main()
         {
+            var p = new Program();
             for (int reRuns = 0; reRuns < 10; reRuns++)
             {
-                var wantsToContinue = new Program().GameBoardRun(null, false);
+                var wantsToContinue = p.GameBoardRun(null, false);
                 if (!wantsToContinue)
                 {
                     break;
