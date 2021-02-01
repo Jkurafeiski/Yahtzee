@@ -9,12 +9,12 @@ namespace Yahtzee
         private static readonly Dice Dice = new Dice();
         private static readonly List<int> ScoreList = new List<int>();
         private ScoreBoard scoreBoard = new ScoreBoard();
+        private static readonly Program programInitializer = new Program();
         static void Main()
         {
-            var p = new Program();
             for (int reRuns = 0; reRuns < 10; reRuns++)
             {
-                var wantsToContinue = p.GameBoardRun(null, false);
+                var wantsToContinue = programInitializer.GameBoardRun(null, false);
                 if (!wantsToContinue)
                 {
                     break;
@@ -71,14 +71,14 @@ namespace Yahtzee
             return true;
         }
 
-        private static int[] DiceReRollHandler(int[] diceToReRoll, int[] initializeDice)
+        private int[] DiceReRollHandler(int[] diceToReRoll, int[] initializeDice)
         {
             foreach (var reRoll in diceToReRoll)
             {
                 initializeDice[reRoll - 1] = Dice.DiceRandomReRoll();
             }
             _reRollRun = true;
-            new Program().GameBoardRun(initializeDice, _reRollRun);
+            programInitializer.GameBoardRun(initializeDice, _reRollRun);
             return initializeDice;
             
         }
