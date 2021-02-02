@@ -5,16 +5,16 @@ namespace Yahtzee
 {
     class Program
     {
-        private static bool _reRollRun = false;
+        private static bool _reRollRun;
         private static readonly Dice Dice = new Dice();
         private static readonly List<int> ScoreList = new List<int>();
         private ScoreBoard scoreBoard = new ScoreBoard();
-        private static readonly Program programInitializer = new Program();
+        private static readonly Program ProgramInitializer = new Program();
         static void Main()
         {
             for (int reRuns = 0; reRuns < 10; reRuns++)
             {
-                var wantsToContinue = programInitializer.GameBoardRun(null, false);
+                var wantsToContinue = ProgramInitializer.GameBoardRun(null, false);
                 if (!wantsToContinue)
                 {
                     break;
@@ -68,33 +68,16 @@ namespace Yahtzee
 
             return true;
         }
-        private int[] DiceReRollHandler(int[] diceToReRoll, int[] initializeDice)
+        private void DiceReRollHandler(int[] toReRoll, int[] initializeDice)
         {
-            foreach (var reRoll in diceToReRoll)
+            foreach (var reRoll in toReRoll)
             {
                 initializeDice[reRoll - 1] = Dice.DiceRandomReRoll();
             }
             _reRollRun = true;
-            programInitializer.GameBoardRun(initializeDice, _reRollRun);
-            return initializeDice;
-            
+            ProgramInitializer.GameBoardRun(initializeDice, _reRollRun);
         }
-        private static int[] DiceReRollConverter(string userInput)
-        {
-            List<int> reRollDiceList = new List<int>();
-            var reRollDie = userInput.Substring(1, userInput.Length-1).ToCharArray();
-            foreach (var die in reRollDie)
-            {
-                var charArrayConvertedToInt = (int) char.GetNumericValue(die);
-                if (charArrayConvertedToInt >= 1 && charArrayConvertedToInt <= 5)
-                {
-                 reRollDiceList.Add(charArrayConvertedToInt);
-                }
-            }
-            int[] reRollDiceArray = reRollDiceList.ToArray();
-            return reRollDiceArray;
 
-        }
         private static void ShowPossibleInputs()
         {
             Console.WriteLine();
@@ -109,26 +92,7 @@ namespace Yahtzee
             Console.WriteLine("8 Große Straße Straße");
             Console.WriteLine("9 Doppeltes Paar");
             Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein r davor");
-        }
-        private static YahtzeeCategory YahtzeeInputHandler(string input)
-        {
-            if (int.TryParse(input, out int yahtzeeResult))
-            {
-                return YahtzeeEnumChecker(yahtzeeResult);
-            }
-
-            return 0;
-
-        }
-        private static YahtzeeCategory YahtzeeEnumChecker(int yahtzeeResult)
-        {
-            if (Enum.IsDefined(typeof(YahtzeeCategory), yahtzeeResult))
-            {
-                YahtzeeCategory myYahtzee = (YahtzeeCategory) yahtzeeResult;
-                return myYahtzee;
-            }
-
-            throw new ArgumentOutOfRangeException("yahtzeeResult", "Das ist keine gültige Nummer");
+            Console.WriteLine("Aber nur drei mal!");
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Yahtzee.Categories;
+﻿using Yahtzee.Categories;
 
 namespace Yahtzee
 {

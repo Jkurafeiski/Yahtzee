@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using static Yahtzee.Categories.Yahtzee;
 
 namespace YahtzeeTest.CategoriesTest
 {
