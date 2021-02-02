@@ -54,7 +54,7 @@ namespace Yahtzee
             {
                 YahtzeeCategory selectedCategory = inputParser.GetSelectedCategory(userInput);
 
-                var scoreValuesAfterCalc = new YahtzeeMath().YahtzeePointCalculator(initializeDice, selectedCategory);
+                var scoreValuesAfterCalc = new ScoreBoard().SwitchInputCalculator(initializeDice, selectedCategory);
                 scoreBoard.AddScore(selectedCategory, scoreValuesAfterCalc);
 
                 ScoreList.Add(scoreValuesAfterCalc);
@@ -64,12 +64,10 @@ namespace Yahtzee
                 }
                 scoreBoard.PrintScoreBoard(score);
                 reRollRun = false;
-                //Console.WriteLine("Deine Punkte sind " + score);
             }
 
             return true;
         }
-
         private int[] DiceReRollHandler(int[] diceToReRoll, int[] initializeDice)
         {
             foreach (var reRoll in diceToReRoll)
@@ -81,7 +79,6 @@ namespace Yahtzee
             return initializeDice;
             
         }
-
         private static int[] DiceReRollConverter(string userInput)
         {
             List<int> reRollDiceList = new List<int>();
@@ -98,7 +95,6 @@ namespace Yahtzee
             return reRollDiceArray;
 
         }
-
         private static void ShowPossibleInputs()
         {
             Console.WriteLine();
@@ -114,7 +110,6 @@ namespace Yahtzee
             Console.WriteLine("9 Doppeltes Paar");
             Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein r davor");
         }
-
         private static YahtzeeCategory YahtzeeInputHandler(string input)
         {
             if (int.TryParse(input, out int yahtzeeResult))
@@ -125,7 +120,6 @@ namespace Yahtzee
             return 0;
 
         }
-
         private static YahtzeeCategory YahtzeeEnumChecker(int yahtzeeResult)
         {
             if (Enum.IsDefined(typeof(YahtzeeCategory), yahtzeeResult))

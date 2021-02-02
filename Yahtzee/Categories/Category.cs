@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Yahtzee.Categories
 {
@@ -17,8 +16,15 @@ namespace Yahtzee.Categories
         {
             return new List<Category>
             {
+                new Sum(),
+                new Pair(),
                 new ThreeOfAKind(), 
-                new FourOfAKind()
+                new FourOfAKind(),
+                new Yahtzee(),
+                new FullHouse(),
+                new LargeStreet(),
+                new SmallStreet(),
+                new DoublePair()
             };
         }
     }

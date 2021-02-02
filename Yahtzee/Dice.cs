@@ -10,8 +10,7 @@ namespace Yahtzee
         {
             _random = new Random(DateTime.Now.Millisecond);
         }
-
-
+        
         public int[] DiceRandomRoll()
         {
             var diceNumber1 = _random.Next(1, 7);
