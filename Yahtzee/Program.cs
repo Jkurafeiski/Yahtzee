@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Yahtzee.Categories;
 
 namespace Yahtzee
 {
@@ -62,11 +63,11 @@ namespace Yahtzee
             }
             else if (selectedOption == InputParser.Option.Category)
             {
-                YahtzeeCategory selectedCategory = inputParser.GetSelectedCategory(userInput);
+                Category selectedCategory = inputParser.GetSelectedCategory(userInput);
 
                 var scoreValuesAfterCalc = new ScoreBoard().SwitchInputCalculator(initializeDice, selectedCategory);
+                
                 scoreBoard.AddScore(selectedCategory, scoreValuesAfterCalc);
-
                 ScoreList.Add(scoreValuesAfterCalc);
                 foreach (int number in ScoreList)
                 {

@@ -8,7 +8,7 @@ namespace Yahtzee
     public class ScoreBoard
     {
         private readonly Dictionary<YahtzeeCategory, int?> _scores;
-        private readonly Dictionary<Category, int?> _newscores;
+        public readonly Dictionary<Category, int?> _newscores;
 
         public string PlayerName { get; set; }
 
@@ -29,23 +29,23 @@ namespace Yahtzee
 
         
 
-        public void AddScore(YahtzeeCategory category, int points)
+        public void AddScore(Category category, int points)
         {
-            if (_scores[category] != null)
+            if (_newscores[category] != null)
             {
                 throw new ScoreBoardException("Hast du schon ausgewählt");
             }
             
-            _scores[category] = points;
+            _newscores[category] = points;
         }
 
-        public void ScratchCategory(YahtzeeCategory category)
+        public void ScratchCategory(Category category)
         {
-            if (_scores[category] != null)
+            if (_newscores[category] != null)
             {
                 throw new ScoreBoardException("Du kannst nicht etwas Streichen was schon eine Nummer hat");
             }
-            _scores[category] = 0;
+            _newscores[category] = 0;
         }
 
         public void Reset()
@@ -53,9 +53,9 @@ namespace Yahtzee
 
         }
 
-        public int? GetScoreForCategory(YahtzeeCategory category)
+        public int? GetScoreForCategory(Category category)
         {
-            return _scores[category];
+            return _newscores[category];
         }
 
         public int TotalScore(int points)
@@ -64,19 +64,25 @@ namespace Yahtzee
             return totalScore;
         }
 
-        public int SwitchInputCalculator(int[] dice, YahtzeeCategory input)
+        public int SwitchInputCalculator(int[] dice, Category input)
         {
-            var res = (from category in _newscores.Keys
-                where category.YahtzeeCategory == input && category.IsMatch(dice)
-                select category.GetScore(dice)).FirstOrDefault();
+            var res = 0;
+            foreach (var category in _newscores.Keys)
+            {
+                if (Category.CreateAll == input && category.IsMatch(dice))
+                {
+                    res = category.GetScore(dice);
+                    break;
+                }
+            }
 
             return res;
         }
 
         public void PrintScoreBoard(int points)
         {
-            Console.WriteLine(TotalScore(points));
-            foreach (KeyValuePair<YahtzeeCategory, int?> kvp in _scores)
+            Console.WriteLine(points);
+            foreach (KeyValuePair<Category, int?> kvp in _newscores)
             {
                 Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
             } 
