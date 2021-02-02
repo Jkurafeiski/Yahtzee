@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Yahtzee.Categories;
 
 namespace Yahtzee
 {
@@ -52,14 +51,13 @@ namespace Yahtzee
             return reRollDiceArray;
         }
 
-        public Category GetSelectedCategory(string userInput)
+        public YahtzeeCategory GetSelectedCategory(string userInput)
         {
             if (userInput.Length > 0 && int.TryParse(userInput, out var input))
             {
-                if (input) // Mein Problem ist, dass ich nicht weiß wie ich hier das Klug abfragen kann
-                            // ohne das Enum weiter zu benutzen oder es vom enum in das neue Dictionary parsen kann
+                if (Enum.IsDefined(typeof(YahtzeeCategory), input))
                 {
-                    return (Category) input;
+                    return (YahtzeeCategory) input;
                 }
             }
 

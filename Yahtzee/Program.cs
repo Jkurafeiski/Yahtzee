@@ -9,7 +9,7 @@ namespace Yahtzee
         private static bool _reRollRun;
         private static readonly Dice Dice = new Dice();
         private static readonly List<int> ScoreList = new List<int>();
-        private ScoreBoard scoreBoard = new ScoreBoard();
+        public ScoreBoard scoreBoard = new ScoreBoard();
         private static readonly Program ProgramInitializer = new Program();
         private static int ReRollTry = 0;
         private static readonly InputParser inputParser = new InputParser();
@@ -63,11 +63,12 @@ namespace Yahtzee
             }
             else if (selectedOption == InputParser.Option.Category)
             {
-                Category selectedCategory = inputParser.GetSelectedCategory(userInput);
+                YahtzeeCategory selectedCategory = inputParser.GetSelectedCategory(userInput);
+                var category = scoreBoard.GetCategory(selectedCategory);
 
                 var scoreValuesAfterCalc = new ScoreBoard().SwitchInputCalculator(initializeDice, selectedCategory);
                 
-                scoreBoard.AddScore(selectedCategory, scoreValuesAfterCalc);
+                scoreBoard.AddScore(category, scoreValuesAfterCalc);
                 ScoreList.Add(scoreValuesAfterCalc);
                 foreach (int number in ScoreList)
                 {

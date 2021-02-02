@@ -8,7 +8,7 @@ namespace Yahtzee
     public class ScoreBoard
     {
         private readonly Dictionary<YahtzeeCategory, int?> _scores;
-        public readonly Dictionary<Category, int?> _newscores;
+        private readonly Dictionary<Category, int?> _newscores;
 
         public string PlayerName { get; set; }
 
@@ -64,12 +64,25 @@ namespace Yahtzee
             return totalScore;
         }
 
-        public int SwitchInputCalculator(int[] dice, Category input)
+        public Category GetCategory(YahtzeeCategory yahtzeeCategory)
+        {
+            foreach (var category in _newscores.Keys)
+            {
+                if (category.YahtzeeCategory == yahtzeeCategory)
+                {
+                    return category;
+                }
+            }
+
+            return null;
+        }
+
+        public int SwitchInputCalculator(int[] dice, YahtzeeCategory input)
         {
             var res = 0;
             foreach (var category in _newscores.Keys)
             {
-                if (Category.CreateAll == input && category.IsMatch(dice))
+                if (category.YahtzeeCategory == input && category.IsMatch(dice))
                 {
                     res = category.GetScore(dice);
                     break;
