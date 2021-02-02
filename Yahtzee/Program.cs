@@ -55,8 +55,7 @@ namespace Yahtzee
                 YahtzeeCategory selectedCategory = inputParser.GetSelectedCategory(userInput);
 
                 var scoreValuesAfterCalc = new YahtzeeMath().YahtzeePointCalculator(initializeDice, selectedCategory);
-                scoreBoard.AddScore(selectedCategory,scoreValuesAfterCalc);
-
+                scoreBoard.AddScore(selectedCategory, scoreValuesAfterCalc);
 
                 ScoreList.Add(scoreValuesAfterCalc);
                 foreach (int number in ScoreList)
