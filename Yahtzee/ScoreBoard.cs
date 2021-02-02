@@ -7,6 +7,7 @@ namespace Yahtzee
     public class ScoreBoard
     {
         private readonly Dictionary<YahtzeeCategory, int?> _scores;
+        private readonly Dictionary<Category, int?> _newscores;
 
         public string PlayerName { get; set; }
 
@@ -16,6 +17,12 @@ namespace Yahtzee
             foreach (YahtzeeCategory category in Enum.GetValues(typeof(YahtzeeCategory)))
             {
                 _scores.Add(category, null);
+            }
+
+            _newscores = new Dictionary<Category, int?>();
+            foreach (var category in Category.CreateAll())
+            {
+                _newscores.Add(category, null);
             }
         }
 
@@ -60,6 +67,7 @@ namespace Yahtzee
             switch (input)
             {
                 case YahtzeeCategory.Sum:
+                    
                     return new Sum().GetScore(dice);
                 case YahtzeeCategory.Pair:
                     if (new Pair().IsMatch(dice)) return new Pair().GetScore(dice);

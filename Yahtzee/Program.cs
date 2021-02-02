@@ -10,6 +10,8 @@ namespace Yahtzee
         private static readonly List<int> ScoreList = new List<int>();
         private ScoreBoard scoreBoard = new ScoreBoard();
         private static readonly Program ProgramInitializer = new Program();
+        private static int ReRollTry = 0;
+        private static readonly InputParser inputParser = new InputParser();
         static void Main()
         {
             for (int reRuns = 0; reRuns < 10; reRuns++)
@@ -38,13 +40,21 @@ namespace Yahtzee
             ShowPossibleInputs();
 
             var userInput = Console.ReadLine()?.ToUpper();
-            var inputParser = new InputParser();
+            
             Console.Clear();
             var selectedOption = inputParser.ParseInput(userInput);
             if (selectedOption == InputParser.Option.ReRoll)
             {
-                var convertedRerollDices = inputParser.GetDiceForReroll(userInput);
-                DiceReRollHandler(convertedRerollDices, initializeDice);
+                try
+                {
+                    CheckReRollTimes(userInput, initializeDice);
+                }
+                catch (ScoreBoardException e)
+                {
+                    Console.WriteLine(e);
+                    ProgramInitializer.GameBoardRun(initializeDice, true);
+                }
+                
             }
             else if (selectedOption == InputParser.Option.Quit)
             {
@@ -64,20 +74,12 @@ namespace Yahtzee
                 }
                 scoreBoard.PrintScoreBoard(score);
                 reRollRun = false;
+                ReRollTry = 0;
             }
 
             return true;
         }
-        private void DiceReRollHandler(int[] toReRoll, int[] initializeDice)
-        {
-            foreach (var reRoll in toReRoll)
-            {
-                initializeDice[reRoll - 1] = Dice.DiceRandomReRoll();
-            }
-            _reRollRun = true;
-            ProgramInitializer.GameBoardRun(initializeDice, _reRollRun);
-        }
-
+        
         private static void ShowPossibleInputs()
         {
             Console.WriteLine();
@@ -93,6 +95,30 @@ namespace Yahtzee
             Console.WriteLine("9 Doppeltes Paar");
             Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein r davor");
             Console.WriteLine("Aber nur drei mal!");
+        }
+
+        private void CheckReRollTimes(string userInput, int[] initializeDice)
+        {
+            
+            if (ReRollTry < 3)
+            {
+                var convertedRerollDices = inputParser.GetDiceForReroll(userInput);
+                ReRollTry ++;
+                DiceReRollHandler(convertedRerollDices, initializeDice);
+            }
+            else
+            {
+                throw new ScoreBoardException("Zu oft neu gerollt"); 
+            }
+        }
+        private void DiceReRollHandler(int[] toReRoll, int[] initializeDice)
+        {
+            foreach (var reRoll in toReRoll)
+            {
+                initializeDice[reRoll - 1] = Dice.DiceRandomReRoll();
+            }
+            _reRollRun = true;
+            ProgramInitializer.GameBoardRun(initializeDice, _reRollRun);
         }
     }
 }
