@@ -19,10 +19,10 @@ namespace YahtzeeTest
         {
             var category = YahtzeeCategory.Pair;
             var points = 8;
-
             _sut.AddScore(category, points);
 
             var actualPoints = _sut.GetScoreForCategory(category);
+            
             Assert.AreEqual(points, actualPoints);
         }
 
@@ -31,18 +31,27 @@ namespace YahtzeeTest
         {
             var category = YahtzeeCategory.Pair;
             _sut.AddScore(category, 8);
-
             TestDelegate del = () => _sut.AddScore(category, 16);
-
             Assert.Throws<ScoreBoardException>(del);
         }
+        
+        [Test]
+        public void PutToResultsToBoard_WhenCategoryAlreadyHasPoints_Throws()
+        {
+            var category = YahtzeeCategory.Pair;
+            int[] diceRolls = new int[5];
+            diceRolls = new[] {1, 2, 3, 4, 5};
+            _sut.PutResultToBoard(diceRolls,category);
+            TestDelegate del = () => _sut.PutResultToBoard(diceRolls, category);
+            Assert.Throws<ScoreBoardException>(del);
+        }
+        
 
         [Test]
         public void ScratchCategory_SetsCategoryPointsToZero()
         {
             var category = YahtzeeCategory.Pair;
             var expectedPointsAfterScratch = 0;
-
             _sut.ScratchCategory(category);
 
             var actualPoints = _sut.GetScoreForCategory(category);
@@ -54,7 +63,6 @@ namespace YahtzeeTest
         {
             var category = YahtzeeCategory.Pair;
             _sut.AddScore(category, 8);
-
             TestDelegate del = () => _sut.ScratchCategory(category);
 
             Assert.Throws<ScoreBoardException>(del);

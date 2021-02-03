@@ -1,51 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Yahtzee.Categories;
 
 namespace Yahtzee
 {
     public class ScoreBoard
     {
-        private readonly Dictionary<YahtzeeCategory, int?> _scores;
         private readonly Dictionary<Category, int?> _newscores;
 
         public string PlayerName { get; set; }
 
         public ScoreBoard()
         {
-            _scores = new Dictionary<YahtzeeCategory, int?>();
-            foreach (YahtzeeCategory category in Enum.GetValues(typeof(YahtzeeCategory)))
-            {
-                _scores.Add(category, null);
-            }
-
             _newscores = new Dictionary<Category, int?>();
             foreach (var category in Category.CreateAll())
             {
                 _newscores.Add(category, null);
             }
         }
-
         
-
-        public void AddScore(Category category, int points)
+        public void AddScore(YahtzeeCategory category, int points)
         {
-            if (_newscores[category] != null)
+            var convertedCategory = GetCategory(category);
+            if (_newscores[convertedCategory] != null)
             {
                 throw new ScoreBoardException("Hast du schon ausgewählt");
             }
             
-            _newscores[category] = points;
+            _newscores[convertedCategory] = points;
         }
 
-        public void ScratchCategory(Category category)
+        public void ScratchCategory(YahtzeeCategory category)
         {
-            if (_newscores[category] != null)
+            var convertedCategory = GetCategory(category);
+            if (_newscores[convertedCategory] != null)
             {
                 throw new ScoreBoardException("Du kannst nicht etwas Streichen was schon eine Nummer hat");
             }
-            _newscores[category] = 0;
+            _newscores[convertedCategory] = 0;
         }
 
         public void Reset()
@@ -53,15 +45,10 @@ namespace Yahtzee
 
         }
 
-        public int? GetScoreForCategory(Category category)
+        public int? GetScoreForCategory(YahtzeeCategory yahtzeeCategory)
         {
+            var category = GetCategory(yahtzeeCategory);
             return _newscores[category];
-        }
-
-        public int TotalScore(int points)
-        {
-            var totalScore = points;
-            return totalScore;
         }
 
         public Category GetCategory(YahtzeeCategory yahtzeeCategory)
@@ -77,19 +64,17 @@ namespace Yahtzee
             return null;
         }
 
-        public int SwitchInputCalculator(int[] dice, YahtzeeCategory input)
+        public void PutResultToBoard(int[] dice, YahtzeeCategory input)
         {
-            var res = 0;
-            foreach (var category in _newscores.Keys)
+            var category = GetCategory(input);
+            if (category.IsMatch(dice))
             {
-                if (category.YahtzeeCategory == input && category.IsMatch(dice))
-                {
-                    res = category.GetScore(dice);
-                    break;
-                }
+                _newscores[category] = category.GetScore(dice);
             }
-
-            return res;
+            else
+            {
+                ScratchCategory(input);
+            }
         }
 
         public void PrintScoreBoard(int points)

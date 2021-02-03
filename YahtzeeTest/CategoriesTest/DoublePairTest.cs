@@ -16,6 +16,8 @@ namespace YahtzeeTest.CategoriesTest
 
 
         [TestCase(6, 6, 5, 5, 4, 22)]
+        [TestCase(3, 3, 5, 5, 4, 16)]
+        [TestCase(2, 2, 1, 1, 4, 6)]
         public void DoublePairScore_ShouldAddDoublePair(int die1, int die2, int die3, int die4, int die5,
             int expectedResult)
         {
@@ -27,6 +29,8 @@ namespace YahtzeeTest.CategoriesTest
         }
 
         [TestCase(2, 5, 3, 3, 4)]
+        [TestCase(1, 2, 4, 3, 4)]
+        [TestCase(5, 5, 2, 1, 4)]
         public void DoublePairScore_WhenCalledWithIllegalRoll_ReturnsZero(int die1, int die2, int die3, int die4,
             int die5)
         {

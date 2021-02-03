@@ -16,6 +16,8 @@ namespace YahtzeeTest.CategoriesTest
 
 
         [TestCase(6, 6, 5, 3, 4, 12)]
+        [TestCase(3, 6, 5, 3, 4, 6)]
+        [TestCase(6, 2, 5, 3, 2, 4)]
         public void LargeStreetScore_ShouldAddLargestreet(int die1, int die2, int die3, int die4, int die5, int expectedResult)
         {
             int[] diceRoll = {die1, die2, die3, die4, die5};

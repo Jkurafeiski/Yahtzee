@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Yahtzee.Categories;
 
 namespace Yahtzee
 {
@@ -8,11 +6,10 @@ namespace Yahtzee
     {
         private static bool _reRollRun;
         private static readonly Dice Dice = new Dice();
-        private static readonly List<int> ScoreList = new List<int>();
-        public ScoreBoard scoreBoard = new ScoreBoard();
+        private readonly ScoreBoard _scoreBoard = new ScoreBoard();
         private static readonly Program ProgramInitializer = new Program();
-        private static int ReRollTry = 0;
-        private static readonly InputParser inputParser = new InputParser();
+        private static int _reRollTry;
+        private static readonly InputParser InputParser = new InputParser();
         static void Main()
         {
             for (int reRuns = 0; reRuns < 10; reRuns++)
@@ -43,7 +40,7 @@ namespace Yahtzee
             var userInput = Console.ReadLine()?.ToUpper();
             
             Console.Clear();
-            var selectedOption = inputParser.ParseInput(userInput);
+            var selectedOption = InputParser.ParseInput(userInput);
             if (selectedOption == InputParser.Option.ReRoll)
             {
                 try
@@ -63,25 +60,17 @@ namespace Yahtzee
             }
             else if (selectedOption == InputParser.Option.Category)
             {
-                YahtzeeCategory selectedCategory = inputParser.GetSelectedCategory(userInput);
-                var category = scoreBoard.GetCategory(selectedCategory);
-
-                var scoreValuesAfterCalc = new ScoreBoard().SwitchInputCalculator(initializeDice, selectedCategory);
-                
-                scoreBoard.AddScore(category, scoreValuesAfterCalc);
-                ScoreList.Add(scoreValuesAfterCalc);
-                foreach (int number in ScoreList)
-                {
-                    score += number;
-                }
-                scoreBoard.PrintScoreBoard(score);
+                YahtzeeCategory selectedCategory = InputParser.GetSelectedCategory(userInput);
+                _scoreBoard.PutResultToBoard(initializeDice, selectedCategory);
                 reRollRun = false;
-                ReRollTry = 0;
+                _reRollTry = 0;
+                _scoreBoard.PrintScoreBoard(score);
             }
 
             return true;
         }
         
+
         private static void ShowPossibleInputs()
         {
             Console.WriteLine();
@@ -102,10 +91,10 @@ namespace Yahtzee
         private void CheckReRollTimes(string userInput, int[] initializeDice)
         {
             
-            if (ReRollTry < 3)
+            if (_reRollTry < 3)
             {
-                var convertedRerollDices = inputParser.GetDiceForReroll(userInput);
-                ReRollTry ++;
+                var convertedRerollDices = InputParser.GetDiceForReroll(userInput);
+                _reRollTry ++;
                 DiceReRollHandler(convertedRerollDices, initializeDice);
             }
             else

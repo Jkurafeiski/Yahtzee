@@ -14,6 +14,8 @@ namespace YahtzeeTest.CategoriesTest
         }
         
         [TestCase(2, 3, 3, 3, 3, 12)]
+        [TestCase(2, 5, 5, 5, 5, 20)]
+        [TestCase(1, 6, 6, 6, 6, 24)]
         public void FourOfAKindScore_ShouldAddFourOfAKind(int die1, int die2, int die3, int die4, int die5, int expectedResult)
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };
@@ -24,6 +26,8 @@ namespace YahtzeeTest.CategoriesTest
         }
 
         [TestCase(2, 5, 3, 3, 4)]
+        [TestCase(1, 2, 3, 4, 4)]
+        [TestCase(2, 4, 3, 3, 4)]
         public void FourOfAKindScore_WhenCalledWithIllegalRoll_ReturnsZero(int die1, int die2, int die3, int die4, int die5)
         {
             int[] diceRoll = { die1, die2, die3, die4, die5 };

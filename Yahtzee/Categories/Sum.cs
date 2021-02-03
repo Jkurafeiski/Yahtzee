@@ -33,12 +33,7 @@ namespace Yahtzee.Categories
 
         public override bool IsMatch(int[] dice)
         {
-            if (dice.GroupBy(x => x).Any(g => g.Count() >= 4))
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
     }
 }
