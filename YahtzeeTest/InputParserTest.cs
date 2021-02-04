@@ -83,7 +83,7 @@ namespace YahtzeeTest
         {
             var safetyinput = "5";
             var dicerolls = new[] {1, 2, 3, 4, 5};
-            TestDelegate del = () => _sut.AskForSafetyInput(safetyinput);
+            TestDelegate del = () => _sut.CheckInputForSafeResult(safetyinput);
 
             Assert.Throws<ScoreBoardException>(del);
         }
