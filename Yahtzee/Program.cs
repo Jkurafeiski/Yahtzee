@@ -6,8 +6,8 @@ namespace Yahtzee
     {
         private static bool _reRollRun;
         private static readonly Dice Dice = new Dice();
-        private readonly ScoreBoard _scoreBoard = new ScoreBoard();
-        private static readonly Program ProgramInitializer = new Program();
+        public static readonly ScoreBoard ScoreBoardGiver = new ScoreBoard();
+        public static readonly Program ProgramInitializer = new Program();
         private static int _reRollTry;
         private static readonly InputParser InputParser = new InputParser();
         static void Main()
@@ -22,9 +22,8 @@ namespace Yahtzee
             }
         }
 
-        private bool GameBoardRun(int[] initializeDice, bool reRollRun)
+        public bool GameBoardRun(int[] initializeDice, bool reRollRun)
         {
-            int score = 0;
             if (!reRollRun)
             {
                 initializeDice = Dice.DiceRandomRoll();
@@ -49,7 +48,7 @@ namespace Yahtzee
                 }
                 catch (ScoreBoardException e)
                 {
-                    Console.WriteLine(e);
+                    Console.WriteLine(e.Message);
                     ProgramInitializer.GameBoardRun(initializeDice, true);
                 }
                 
@@ -60,38 +59,33 @@ namespace Yahtzee
             }
             else if (selectedOption == InputParser.Option.Restart)
             {
-                RestartHandler(initializeDice);
+                try
+                {
+                    Console.WriteLine("Bist du sicher ? J / N");
+                    var safetyInput = Console.ReadLine();
+                    safetyInput = safetyInput.ToUpper();
+                    InputParser.RestartHandler(initializeDice, safetyInput);
+                }
+                catch (ScoreBoardException e)
+                {
+                    Console.Clear();
+                    Console.WriteLine(e.Message);
+                    ProgramInitializer.GameBoardRun(initializeDice, true);
+                }
             }
             else if (selectedOption == InputParser.Option.Category)
             {
                 YahtzeeCategory selectedCategory = InputParser.GetSelectedCategory(userInput);
-                _scoreBoard.PutResultToBoard(initializeDice, selectedCategory);
-                reRollRun = false;
+                ScoreBoardGiver.PutResultToBoard(initializeDice, selectedCategory);
                 _reRollTry = 0;
-                _scoreBoard.PrintScoreBoard();
+                ScoreBoardGiver.PrintScoreBoard();
             }
 
             return true;
         }
 
-        private void RestartHandler(int[] initializeDice)
-        {
-            Console.WriteLine("Bist du sicher ? J / N");
-            var safetyInput = Console.ReadLine();
-            safetyInput.ToUpper();
-            if (safetyInput == "J")
-            {
-                new ScoreBoard();
-                new ScoreBoard().Reset();
-            }
-            else if (safetyInput == "N")
-            {
-                Console.WriteLine("Dann mach eine neue Eingabe");
-                ProgramInitializer.GameBoardRun(initializeDice, true);
-            }
-        }
-
-
+       
+        
         private static void ShowPossibleInputs()
         {
             Console.WriteLine();
@@ -107,7 +101,7 @@ namespace Yahtzee
             Console.WriteLine("9 Doppeltes Paar");
             Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein 'r' davor");
             Console.WriteLine("Aber nur drei mal!");
-            Console.WriteLine("Mit Z kannst du das Spiel auch mit 'z' zurücksetzten oder mit 'q' die Anwendung verlassen");
+            Console.WriteLine("Du kannst du das Spiel auch mit 'z' zurücksetzten oder mit 'q' die Anwendung verlassen");
         }
 
         private void CheckReRollTimes(string userInput, int[] initializeDice)

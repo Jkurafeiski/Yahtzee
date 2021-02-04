@@ -77,5 +77,14 @@ namespace YahtzeeTest
 
             Assert.AreEqual(expected, actual);
         }
+        [Test]
+        public void RestartHandler_TestWithPositive()
+        {
+            var safetyinput = "5";
+            var dicerolls = new[] {1, 2, 3, 4, 5};
+            TestDelegate del = () => _sut.RestartHandler(dicerolls, safetyinput);
+
+            Assert.Throws<ScoreBoardException>(del);
+        }
     }
 }

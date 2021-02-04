@@ -68,6 +68,23 @@ namespace Yahtzee
 
             throw new ArgumentException("input not valid");
         }
+        public void RestartHandler(int[] initializeDice, string safetyInput)
+        {
+            
+            if (safetyInput == "J")
+            {
+                Program.ScoreBoardGiver.Reset();
+            }
+            else if (safetyInput == "N")
+            {
+                Console.WriteLine("Dann mach eine neue Eingabe");
+                Program.ProgramInitializer.GameBoardRun(initializeDice, true);
+            }
+            else
+            {
+                throw new ScoreBoardException("Du musst schon richtig bestätigen!");
+            }
+        }
 
         public enum Option
         {

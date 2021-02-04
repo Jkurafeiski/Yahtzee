@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using Yahtzee;
+using Yahtzee.Categories;
 
 namespace YahtzeeTest
 {
@@ -67,5 +70,23 @@ namespace YahtzeeTest
 
             Assert.Throws<ScoreBoardException>(del);
         }
+        
+        [Test]
+        public void Reset_TestWithScoreBoardInitialize_Equals()
+        {
+            var categoryPair = YahtzeeCategory.Pair;
+            var categoryFullHouse = YahtzeeCategory.FullHouse;
+            var points = 8;
+            _sut.AddScore(categoryPair, points);
+            _sut.AddScore(categoryFullHouse, points);
+            _sut.Reset();
+            var resettedScores = _sut.GetNewScores();
+
+            foreach (KeyValuePair<Category, int?> score in resettedScores)
+            {
+                Assert.IsNull(score.Value);
+            }
+        }
+       
     }
 }
