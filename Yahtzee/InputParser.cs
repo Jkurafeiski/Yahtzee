@@ -68,7 +68,7 @@ namespace Yahtzee
 
             throw new ArgumentException("input not valid");
         }
-        public bool AskForSafetyInput(int[] initializeDice, string safetyInput)
+        public bool AskForSafetyInput(string safetyInput)
         {
             
             if (safetyInput == "J")

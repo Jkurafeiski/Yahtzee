@@ -60,7 +60,7 @@ namespace Yahtzee
                     Console.WriteLine("Bist du sicher ? J / N");
                     var safetyInput = Console.ReadLine();
                     safetyInput = safetyInput.ToUpper();
-                    if (InputParser.AskForSafetyInput(initializeDice, safetyInput))
+                    if (InputParser.AskForSafetyInput(safetyInput))
                     {
                         return false;
                     }
@@ -84,7 +84,7 @@ namespace Yahtzee
                     Console.WriteLine("Bist du sicher ? J / N");
                     var safetyInput = Console.ReadLine();
                     safetyInput = safetyInput.ToUpper();
-                    if (InputParser.AskForSafetyInput(initializeDice, safetyInput))
+                    if (InputParser.AskForSafetyInput(safetyInput))
                     {
                         Console.WriteLine("Dann mach eine neue Eingabe");
                         ProgramInitializer.GameBoardRun(initializeDice, true);
