@@ -79,13 +79,24 @@ namespace YahtzeeTest
         }
         
         [Test]
-        public void RestartHandler_TestWithPositive()
+        public void CheckInputForSafeResult_TestWithException()
         {
             var safetyinput = "5";
-            var dicerolls = new[] {1, 2, 3, 4, 5};
             TestDelegate del = () => _sut.CheckInputForSafeResult(safetyinput);
-
             Assert.Throws<ScoreBoardException>(del);
+        }
+        [Test]
+        public void CheckInputForSafeResult_TestWithPositive()
+        {
+            var safetyinput = "J";
+            _sut.CheckInputForSafeResult(safetyinput);
+            Assert.IsTrue(_sut.CheckInputForSafeResult(safetyinput));
+        }
+        [Test]
+        public void CheckInputForSafeResult_TestWithNegative()
+        {
+            var safetyinput = "N";
+            Assert.IsFalse(_sut.CheckInputForSafeResult(safetyinput));
         }
     }
 }
