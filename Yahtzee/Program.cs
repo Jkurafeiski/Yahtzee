@@ -55,8 +55,21 @@ namespace Yahtzee
             }
             else if (selectedOption == InputParser.Option.Quit)
             {
-                Console.WriteLine("Schade, dass du nicht weiter spielen willst ):  ");
-                return false;
+                Console.WriteLine("Bist du sicher ? J / N");
+                var safetyInput = Console.ReadLine();
+                safetyInput = safetyInput.ToUpper();
+                if (safetyInput == "J")
+                {
+                    return false;
+                }
+                else if (safetyInput == "N")
+                {
+                    ProgramInitializer.GameBoardRun(initializeDice, true);
+                }
+                else
+                {
+                    throw new ScoreBoardException("Muss schon eine Richtige eingabe sein");
+                }
             }
             else if (selectedOption == InputParser.Option.Restart)
             {
