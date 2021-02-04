@@ -105,8 +105,9 @@ namespace Yahtzee
             Console.WriteLine("7 Kleine Straße");
             Console.WriteLine("8 Große Straße Straße");
             Console.WriteLine("9 Doppeltes Paar");
-            Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein r davor");
+            Console.WriteLine("Wenn du einen Würfel neu Rollen willst, dann schreibe die Stelle an der der Würfel ist und ein 'r' davor");
             Console.WriteLine("Aber nur drei mal!");
+            Console.WriteLine("Mit Z kannst du das Spiel auch mit 'z' zurücksetzten oder mit 'q' die Anwendung verlassen");
         }
 
         private void CheckReRollTimes(string userInput, int[] initializeDice)
