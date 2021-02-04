@@ -6,8 +6,8 @@ namespace Yahtzee
     {
         private static bool _reRollRun;
         private static readonly Dice Dice = new Dice();
-        public static readonly ScoreBoard ScoreBoardGiver = new ScoreBoard();
-        public static readonly Program ProgramInitializer = new Program();
+        private static readonly ScoreBoard ScoreBoardGiver = new ScoreBoard();
+        private static readonly Program ProgramInitializer = new Program();
         private static int _reRollTry;
         private static readonly InputParser InputParser = new InputParser();
         static void Main()
@@ -22,7 +22,7 @@ namespace Yahtzee
             }
         }
 
-        public bool GameBoardRun(int[] initializeDice, bool reRollRun)
+        private bool GameBoardRun(int[] initializeDice, bool reRollRun)
         {
             if (!reRollRun)
             {
