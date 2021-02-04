@@ -77,6 +77,7 @@ namespace YahtzeeTest
 
             Assert.AreEqual(expected, actual);
         }
+        
         [Test]
         public void RestartHandler_TestWithPositive()
         {

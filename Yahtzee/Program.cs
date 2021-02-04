@@ -55,6 +55,7 @@ namespace Yahtzee
             }
             else if (selectedOption == InputParser.Option.Quit)
             {
+                Console.WriteLine("Schade, dass du nicht weiter spielen willst ):  ");
                 return false;
             }
             else if (selectedOption == InputParser.Option.Restart)
