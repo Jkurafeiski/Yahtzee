@@ -58,18 +58,39 @@ namespace Yahtzee
             {
                 return false;
             }
+            else if (selectedOption == InputParser.Option.Restart)
+            {
+                RestartHandler(initializeDice);
+            }
             else if (selectedOption == InputParser.Option.Category)
             {
                 YahtzeeCategory selectedCategory = InputParser.GetSelectedCategory(userInput);
                 _scoreBoard.PutResultToBoard(initializeDice, selectedCategory);
                 reRollRun = false;
                 _reRollTry = 0;
-                _scoreBoard.PrintScoreBoard(score);
+                _scoreBoard.PrintScoreBoard();
             }
 
             return true;
         }
-        
+
+        private void RestartHandler(int[] initializeDice)
+        {
+            Console.WriteLine("Bist du sicher ? J / N");
+            var safetyInput = Console.ReadLine();
+            safetyInput.ToUpper();
+            if (safetyInput == "J")
+            {
+                new ScoreBoard();
+                new ScoreBoard().Reset();
+            }
+            else if (safetyInput == "N")
+            {
+                Console.WriteLine("Dann mach eine neue Eingabe");
+                ProgramInitializer.GameBoardRun(initializeDice, true);
+            }
+        }
+
 
         private static void ShowPossibleInputs()
         {

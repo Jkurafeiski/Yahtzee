@@ -17,6 +17,11 @@ namespace Yahtzee
             {
                 return Option.ReRoll;
             }
+            
+            if (userInput.StartsWith("Z"))
+            {
+                return Option.Restart;
+            }
 
             if (userInput.StartsWith("Q"))
             {
@@ -69,7 +74,8 @@ namespace Yahtzee
             Unknown,
             Category,
             ReRoll,
-            Quit
+            Quit,
+            Restart
         }
     }
 }

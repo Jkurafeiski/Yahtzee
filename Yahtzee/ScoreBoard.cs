@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Yahtzee.Categories;
 
 namespace Yahtzee
@@ -7,7 +8,7 @@ namespace Yahtzee
     public class ScoreBoard
     {
         private readonly Dictionary<Category, int?> _newscores;
-
+        private int totalpoints = 0;
         public string PlayerName { get; set; }
 
         public ScoreBoard()
@@ -26,7 +27,8 @@ namespace Yahtzee
             {
                 throw new ScoreBoardException("Hast du schon ausgewählt");
             }
-            
+
+            totalpoints += points;
             _newscores[convertedCategory] = points;
         }
 
@@ -42,7 +44,12 @@ namespace Yahtzee
 
         public void Reset()
         {
-
+            Console.Clear();
+            foreach (var category in _newscores.Keys.ToList())
+            {
+                _newscores[category] = null;
+            }
+            new Program();
         }
 
         public int? GetScoreForCategory(YahtzeeCategory yahtzeeCategory)
@@ -77,9 +84,9 @@ namespace Yahtzee
             }
         }
 
-        public void PrintScoreBoard(int points)
+        public void PrintScoreBoard()
         {
-            Console.WriteLine(points);
+            Console.WriteLine(totalpoints);
             foreach (KeyValuePair<Category, int?> kvp in _newscores)
             {
                 Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
