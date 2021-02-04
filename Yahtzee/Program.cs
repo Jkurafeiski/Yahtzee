@@ -55,21 +55,27 @@ namespace Yahtzee
             }
             else if (selectedOption == InputParser.Option.Quit)
             {
-                Console.WriteLine("Bist du sicher ? J / N");
-                var safetyInput = Console.ReadLine();
-                safetyInput = safetyInput.ToUpper();
-                if (safetyInput == "J")
+                try
                 {
-                    return false;
+                    Console.WriteLine("Bist du sicher ? J / N");
+                    var safetyInput = Console.ReadLine();
+                    safetyInput = safetyInput.ToUpper();
+                    if (InputParser.AskForSafetyInput(initializeDice, safetyInput))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        throw new ScoreBoardException("Muss schon eine Richtige eingabe sein");
+                    }
                 }
-                else if (safetyInput == "N")
+                catch (Exception e)
                 {
+                    Console.Clear();
+                    Console.WriteLine(e.Message);
                     ProgramInitializer.GameBoardRun(initializeDice, true);
                 }
-                else
-                {
-                    throw new ScoreBoardException("Muss schon eine Richtige eingabe sein");
-                }
+                
             }
             else if (selectedOption == InputParser.Option.Restart)
             {
@@ -78,7 +84,12 @@ namespace Yahtzee
                     Console.WriteLine("Bist du sicher ? J / N");
                     var safetyInput = Console.ReadLine();
                     safetyInput = safetyInput.ToUpper();
-                    InputParser.RestartHandler(initializeDice, safetyInput);
+                    if (InputParser.AskForSafetyInput(initializeDice, safetyInput))
+                    {
+                        Console.WriteLine("Dann mach eine neue Eingabe");
+                        ProgramInitializer.GameBoardRun(initializeDice, true);
+                    }
+                    
                 }
                 catch (ScoreBoardException e)
                 {

@@ -68,17 +68,17 @@ namespace Yahtzee
 
             throw new ArgumentException("input not valid");
         }
-        public void RestartHandler(int[] initializeDice, string safetyInput)
+        public bool AskForSafetyInput(int[] initializeDice, string safetyInput)
         {
             
             if (safetyInput == "J")
             {
-                Program.ScoreBoardGiver.Reset();
+                return true;
             }
             else if (safetyInput == "N")
             {
-                Console.WriteLine("Dann mach eine neue Eingabe");
-                Program.ProgramInitializer.GameBoardRun(initializeDice, true);
+                
+                return false;
             }
             else
             {
