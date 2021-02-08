@@ -2,7 +2,7 @@
 
 namespace Yahtzee.Categories
 {
-    public class FourOfAKind : Category
+    public class FourOfAKind : Category , ICategory
     {
         public override string Name
         {

@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Yahtzee.Categories;
 
 namespace Yahtzee
 {
     public class ScoreBoard
     {
-        private readonly Dictionary<Category, int?> _newscores;
+        private readonly Dictionary<ICategory, int?> _newscores;
         private int _totalpoints;
         public string PlayerName { get; set; }
 
         public ScoreBoard()
         {
-            _newscores = new Dictionary<Category, int?>();
-            foreach (var category in Category.CreateAll())
+            var categoryList = InterfaceHandler();
+            _newscores = new Dictionary<ICategory, int?>();
+            foreach (var category in categoryList)
             {
                 _newscores.Add(category, null);
             }
@@ -62,7 +64,7 @@ namespace Yahtzee
             {
                 if (category.YahtzeeCategory == yahtzeeCategory)
                 {
-                    return category;
+                    return (Category) category;
                 }
             }
 
@@ -83,15 +85,37 @@ namespace Yahtzee
             }
         }
 
-        public Dictionary<Category, int?> GetNewScores()
+        public Dictionary<ICategory, int?> GetNewScores()
         {
             return _newscores;
+        }
+
+        private List<ICategory> InterfaceHandler()
+        {
+            List<ICategory> categories = new List<ICategory>();
+            var interfaceType = typeof(ICategory);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => interfaceType.IsAssignableFrom(p));
+
+            foreach (var type in types)
+            {
+                if (!type.IsAbstract)
+                {
+                    var instance = Activator.CreateInstance(type);
+                    //ConstructorInfo ctor = type.GetConstructor(new[] { typeof(int) });
+                    //object instance = ctor.Invoke(new object[] { 10 });
+                    categories.Add((ICategory) instance);
+                }
+            }
+
+            return categories;
         }
 
         public void PrintScoreBoard()
         {
             Console.WriteLine(_totalpoints);
-            foreach (KeyValuePair<Category, int?> kvp in _newscores)
+            foreach (KeyValuePair<ICategory, int?> kvp in _newscores)
             {
                 Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
             } 

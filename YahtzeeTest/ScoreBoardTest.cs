@@ -82,7 +82,7 @@ namespace YahtzeeTest
             _sut.Reset();
             var resettedScores = _sut.GetNewScores();
 
-            foreach (KeyValuePair<Category, int?> score in resettedScores)
+            foreach (KeyValuePair<ICategory, int?> score in resettedScores)
             {
                 Assert.IsNull(score.Value);
             }
