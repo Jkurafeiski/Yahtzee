@@ -5,9 +5,12 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yahtzee", "Yahtzee\Yahtzee.csproj", "{CF294C11-54EE-447E-B8E5-C2567919BE30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YahtzeeTest", "YahtzeeTest\YahtzeeTest.csproj", "{5ABDF95F-E8F3-4778-9A60-16D3E62D5969}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YahtzeeTest", "YahtzeeTest\YahtzeeTest.csproj", "{5ABDF95F-E8F3-4778-9A60-16D3E62D5969}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YahtzeeWPF", "YahtzeeWPF\YahtzeeWPF.csproj", "{7DA0434B-9E21-43F0-87A2-833609A7F30E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YahtzeeWPF", "YahtzeeWPF\YahtzeeWPF.csproj", "{7DA0434B-9E21-43F0-87A2-833609A7F30E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CF294C11-54EE-447E-B8E5-C2567919BE30} = {CF294C11-54EE-447E-B8E5-C2567919BE30}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

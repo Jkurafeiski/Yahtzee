@@ -65,7 +65,6 @@ namespace Yahtzee
                     return (YahtzeeCategory) input;
                 }
             }
-
             throw new ArgumentException("input not valid");
         }
         public bool CheckInputForSafeResult(string safetyInput)
@@ -75,7 +74,7 @@ namespace Yahtzee
             {
                 return true;
             }
-            else if (safetyInput == "N")
+            if (safetyInput == "N")
             {
                 
                 return false;
