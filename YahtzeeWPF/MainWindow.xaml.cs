@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
-using Yahtzee;
+﻿using System.Windows;
 
 namespace YahtzeeWPF
 {

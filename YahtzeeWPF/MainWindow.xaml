@@ -3,18 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:YahtzeeWPF"
-        xmlns:Collections="clr-namespace:System.Collections;assembly=System.Runtime" x:Class="YahtzeeWPF.MainWindow"
+        x:Class="YahtzeeWPF.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="450">
-	<Grid>
-		<DataGrid>
+        Title="MainWindow" Height="600" Width="450">
+    <Grid x:Name="ScoreDataGrid">
+        <DataGrid AutoGenerateColumns="False"
+                  ItemsSource="{Binding DataGridList}" Margin="0,0,0,70">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Key}" />
-                <DataGridTextColumn Header="Value" Binding="{Binding Value}" />
+                <DataGridTextColumn Header="Key" Binding="{Binding Category.Name}"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding ScoreValue}" />
             </DataGrid.Columns>
-		</DataGrid>
-
-
-	</Grid>
+        </DataGrid>
+        <Menu VerticalAlignment="Bottom">
+            <Button Background="#FF32DE00" Content="Score berechnen"/>
+            <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu rollen"/>
+            <Button Background="#FFFF9F15" Content="Zurücksetzten"/>
+            <Button Background="#FFFF3939" Content="Quit"/>
+        </Menu>
+        <TextBox TextWrapping="Wrap" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="315,0,0,0">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+    </Grid>
 </Window>
