@@ -11,6 +11,7 @@ namespace Yahtzee
         private readonly Dictionary<ICategory, int?> _newscores;
         private int _totalpoints;
         public string PlayerName { get; set; }
+        private static int _reRollTry;
 
         public ScoreBoard()
         {
@@ -78,7 +79,31 @@ namespace Yahtzee
 
             return null;
         }
-       
+
+        public int[] CheckReRollTimes(string userInput, int[] initializeDice)
+        {
+
+            if (_reRollTry < 3)
+            {
+                var convertedRerollDices = new InputParser().GetDiceForReroll(userInput);
+                _reRollTry++;
+                var newInitializeDice = DiceReRollHandler(convertedRerollDices, initializeDice);
+                return newInitializeDice;
+            }
+            else
+            {
+                throw new ScoreBoardException("Zu oft neu gerollt");
+            }
+        }
+
+        private int[] DiceReRollHandler(int[] toReRoll, int[] initializeDice)
+        {
+            foreach (var reRoll in toReRoll)
+            {
+                initializeDice[reRoll - 1] = new Dice().DiceRandomReRoll();
+            }
+            return initializeDice;
+        }
 
         public void PutResultToBoard(int[] dice, YahtzeeCategory input)
         {

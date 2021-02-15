@@ -15,10 +15,9 @@
             </DataGrid.Columns>
         </DataGrid>
         <Menu VerticalAlignment="Bottom">
-            <Button Background="#FF32DE00" Content="Score berechnen" Command="{Binding ButtonClickCommand}"/>
-            <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu rollen"/>
-            <Button Background="#FFFF9F15" Content="Zurücksetzten"/>
-            <Button Background="#FFFF3939" Content="Quit"/>
+            <Button Background="#FF32DE00" Content="Score berechnen" Command="{Binding ScoreButtonclickCommand}"/>
+            <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu rollen" Command="{Binding RerollButtonClickCommand}"/>
+            <Button Background="#FFFF9F15" Content="Zurücksetzten" Command="{Binding ResetButtonClickCommand}"/>
         </Menu>
         <TextBox TextWrapping="Wrap" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="315,0,0,0" Text="{Binding TextBox1Input, UpdateSourceTrigger=PropertyChanged}" Height="20">
             <TextBox.RenderTransform>

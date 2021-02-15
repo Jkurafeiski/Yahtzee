@@ -14,8 +14,12 @@ namespace YahtzeeWPF
         private ObservableCollection<YahtzeeModel> _dataGridList;
         private ObservableCollection<DiceModel> _diceDataGrid;
         private string _textBox1Input;
-        private readonly DelegateCommand<string> _clickCommand;
+        private readonly DelegateCommand<string> _scoreclickCommand;
+        private readonly DelegateCommand<string> _rerollclickCommand;
+        private readonly DelegateCommand<string> _resetclickCommand;
         private static readonly Dice Dice = new Dice();
+
+
         public string TextBox1Input
         {
             get { return _textBox1Input;}
@@ -24,14 +28,24 @@ namespace YahtzeeWPF
                 if (_textBox1Input != value)
                 {
                     _textBox1Input = value;
-                    _clickCommand.RaiseCanExecuteChanged();
+                    _scoreclickCommand.RaiseCanExecuteChanged();
+                    _resetclickCommand.RaiseCanExecuteChanged();
+                    _rerollclickCommand.RaiseCanExecuteChanged();
                 }
             }
         }
 
-        public DelegateCommand<string> ButtonClickCommand
+        public DelegateCommand<string> ScoreButtonclickCommand
         {
-            get { return _clickCommand; }
+            get { return _scoreclickCommand; }
+        }
+        public DelegateCommand<string> RerollButtonClickCommand
+        {
+            get { return _rerollclickCommand; }
+        }
+        public DelegateCommand<string> ResetButtonClickCommand
+        {
+            get { return _resetclickCommand; }
         }
 
         public ObservableCollection<YahtzeeModel> DataGridList
@@ -78,13 +92,35 @@ namespace YahtzeeWPF
             _diceDataGrid = new ObservableCollection<DiceModel>(boo);
             _dataGridList = new ObservableCollection<YahtzeeModel>(foo);
 
-            _clickCommand = new DelegateCommand<string>(
+            _scoreclickCommand = new DelegateCommand<string>(
                 (s) =>
                 { 
                     var result = new InputParser().GetSelectedCategory(_textBox1Input);
                     _scoreBoard.PutResultToBoard(initializeDice, result);
-                }, //Execute
-                (s) => { return !string.IsNullOrEmpty(_textBox1Input); } //CanExecute
+                },
+                (s) => { return !string.IsNullOrEmpty(_textBox1Input); }
+            );
+            _rerollclickCommand = new DelegateCommand<string>(
+                (s) =>
+                {
+                    try
+                    {
+                        initializeDice = _scoreBoard.CheckReRollTimes(_textBox1Input, initializeDice);
+                    }
+                    catch (ScoreBoardException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                },
+                (s) => { return !string.IsNullOrEmpty(_textBox1Input); }
+            );
+            _resetclickCommand = new DelegateCommand<string>(
+                (s) =>
+                {
+                    SafetyWindow win2 = new SafetyWindow();
+                    win2.Show();
+                },
+                (s) => { return !string.IsNullOrEmpty(_textBox1Input); }
             );
         }
     }
