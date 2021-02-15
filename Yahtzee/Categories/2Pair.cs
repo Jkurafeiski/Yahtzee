@@ -2,13 +2,13 @@ using System.Linq;
 
 namespace Yahtzee.Categories
 {
-    public class Yahtzee : Category
+    public class Pair : Category
     {
         public override string Name
         {
             get
             {
-                return "Kniffel";
+                return "2. Paar";
             }
         }
 
@@ -16,23 +16,25 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return YahtzeeCategory.FourOfAKind;
+                return YahtzeeCategory.Pair;
             }
         }
 
         public override int GetScore(int[] dice)
         {
-            if (IsMatch(dice))
+            var sum = 0;
+            var duplicates = dice.GroupBy(g => g).Where(w => w.Count() > 1).Select(s => s.Key).ToList();
+            foreach (var number in duplicates)
             {
-                return 50;
+                sum = number * 2;
             }
 
-            return 0;
+            return sum;
         }
 
         public override bool IsMatch(int[] dice)
         {
-            if (dice.GroupBy(x => x).Any(g => g.Count() == 5))
+            if (dice.GroupBy(x => x).Any(g => g.Count() >= 2))
             {
                 return true;
             }

@@ -9,7 +9,7 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "Full House";
+                return "6. Full House";
             }
         }
 

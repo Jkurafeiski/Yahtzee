@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YahtzeeWPF\YahtzeeWPF.csproj" />
     <ProjectReference Include="..\Yahtzee\Yahtzee.csproj" />
   </ItemGroup>
 

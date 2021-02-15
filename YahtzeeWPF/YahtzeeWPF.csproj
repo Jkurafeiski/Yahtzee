@@ -7,7 +7,37 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="DiceImages\Dice1.png" />
+      <None Remove="DiceImages\Dice2.png" />
+      <None Remove="DiceImages\Dice3.png" />
+      <None Remove="DiceImages\Dice4.jpg" />
+      <None Remove="DiceImages\Dice5.png" />
+      <None Remove="DiceImages\Dice6.png" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Yahtzee\Yahtzee.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="DiceImages\Dice1.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiceImages\Dice2.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiceImages\Dice3.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiceImages\Dice4.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiceImages\Dice5.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiceImages\Dice6.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

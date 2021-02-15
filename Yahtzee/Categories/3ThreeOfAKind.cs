@@ -2,13 +2,13 @@
 
 namespace Yahtzee.Categories
 {
-    public class FourOfAKind : Category , ICategory
+    public class ThreeOfAKind : Category, ICategory
     {
         public override string Name
         {
             get
             {
-                return "Vierling";
+                return "3. Drilling";
             }
         }
 
@@ -16,17 +16,17 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return YahtzeeCategory.FourOfAKind;
+                return YahtzeeCategory.ThreeOfAKind;
             }
         }
 
         public override int GetScore(int[] dice)
         {
             var sum = 0;
-            var duplicates = dice.GroupBy(g => g).Where(w => w.Count() > 3).Select(s => s.Key).ToList();
+            var duplicates = dice.GroupBy(g => g).Where(w => w.Count() > 2).Select(s => s.Key).ToList();
             foreach (var number in duplicates)
             {
-                sum = number * 4;
+                sum = number * 3;
             }
 
             return sum;
@@ -34,7 +34,7 @@ namespace Yahtzee.Categories
 
         public override bool IsMatch(int[] dice)
         {
-            if (dice.GroupBy(x => x).Any(g => g.Count() >= 4))
+            if (dice.GroupBy(x => x).Any(g => g.Count() >= 3))
             {
                 return true;
             }

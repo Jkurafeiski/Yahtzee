@@ -8,7 +8,7 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "Zwei Paare";
+                return "9. Zwei Paare";
             }
         }
 

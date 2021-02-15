@@ -38,10 +38,6 @@ namespace Yahtzee
 
         public int[] GetDiceForReroll(string userInput)
         {
-            if (userInput.StartsWith("R"))
-            {
-                userInput = userInput.Substring(1);
-            }
             List<int> reRollDiceList = new List<int>();
             var reRollDie = userInput.ToCharArray();
             foreach (var die in reRollDie)
@@ -65,8 +61,10 @@ namespace Yahtzee
                     return (YahtzeeCategory) input;
                 }
             }
-            throw new ArgumentException("input not valid");
+
+            throw new ArgumentException("Falsche eingabe, dein Scoreboard wird nun zurückgesetzt. Geb besser was richtiges ein");
         }
+
         public bool CheckInputForSafeResult(string safetyInput)
         {
             

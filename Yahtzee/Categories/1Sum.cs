@@ -8,7 +8,7 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "Summe";
+                return "1. Summe";
             }
         }
 

@@ -11,5 +11,6 @@
         SmallStreet = 7,
         LargeStreet = 8,
         DoublePair = 9,
+        Empty = 0
     }
 }

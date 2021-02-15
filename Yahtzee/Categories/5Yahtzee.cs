@@ -1,14 +1,14 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Yahtzee.Categories
 {
-    public class ThreeOfAKind : Category, ICategory
+    public class Yahtzee : Category
     {
         public override string Name
         {
             get
             {
-                return "Drilling";
+                return "5. Kniffel";
             }
         }
 
@@ -16,25 +16,23 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return YahtzeeCategory.ThreeOfAKind;
+                return YahtzeeCategory.Yahtzee;
             }
         }
 
         public override int GetScore(int[] dice)
         {
-            var sum = 0;
-            var duplicates = dice.GroupBy(g => g).Where(w => w.Count() > 2).Select(s => s.Key).ToList();
-            foreach (var number in duplicates)
+            if (IsMatch(dice))
             {
-                sum = number * 3;
+                return 50;
             }
 
-            return sum;
+            return 0;
         }
 
         public override bool IsMatch(int[] dice)
         {
-            if (dice.GroupBy(x => x).Any(g => g.Count() >= 3))
+            if (dice.GroupBy(x => x).Any(g => g.Count() == 5))
             {
                 return true;
             }

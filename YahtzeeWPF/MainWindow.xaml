@@ -7,20 +7,20 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="450">
     <Grid x:Name="ScoreDataGrid">
-        <DataGrid AutoGenerateColumns="False"
+        <DataGrid AutoGenerateColumns="False" IsReadOnly="True"
                   ItemsSource="{Binding DataGridList}" Margin="0,0,0,70">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Category.Name}"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding ScoreValue}" />
+                <DataGridTextColumn Header="Key" Binding="{Binding Category.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding ScoreValue, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
         </DataGrid>
         <Menu VerticalAlignment="Bottom">
-            <Button Background="#FF32DE00" Content="Score berechnen" Command="{Binding ButtonClickCommand}"/>
-            <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu rollen"/>
-            <Button Background="#FFFF9F15" Content="Zurücksetzten"/>
-            <Button Background="#FFFF3939" Content="Quit"/>
+            <Button Background="#FF32DE00" Content="Score berechnen" Command="{Binding ScoreButtonclickCommand}"/>
+            <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu rollen" Command="{Binding RerollButtonClickCommand}"/>
+            <Button Content="Scratch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Background="#FFF9923B" Command="{Binding ScratchButtonClick}"/>
+            <Button Background="#FFF90000" Content="Zurücksetzten" Command="{Binding ResetButtonClickCommand}"/>
         </Menu>
-        <TextBox TextWrapping="Wrap" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="315,0,0,0" Text="{Binding TextBox1Input, UpdateSourceTrigger=PropertyChanged}" Height="20">
+        <TextBox Name="TextBox1InputName" TextWrapping="Wrap" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="360,0,0,0" Text="{Binding TextBox1Input, UpdateSourceTrigger=PropertyChanged}" Height="20">
             <TextBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="1"/>
@@ -30,22 +30,22 @@
                 </TransformGroup>
             </TextBox.RenderTransform>
         </TextBox>
-        <DataGrid Margin="0,494,0,23" AutoGenerateColumns="False" ItemsSource="{Binding DiceDataGrid}">
+        <DataGrid Margin="0,494,0,23" AutoGenerateColumns="False" ItemsSource="{Binding DiceDataGrid}" IsReadOnly="True" >
             <DataGrid.Resources>
-            <Style x:Key="DataGridBase" TargetType="Control">
-                <Setter Property="LayoutTransform">
-                    <Setter.Value>
-                        <TransformGroup>
-                            <RotateTransform Angle="-90" />
-                            <ScaleTransform ScaleX="1" ScaleY="-1" />
-                        </TransformGroup>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-            </Style >
-            <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridBase}"/>
-            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridBase}"/>
-            <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource DataGridBase}"/>
+                <Style x:Key="DataGridBase" TargetType="Control">
+                    <Setter Property="LayoutTransform">
+                        <Setter.Value>
+                            <TransformGroup>
+                                <RotateTransform Angle="-90" />
+                                <ScaleTransform ScaleX="1" ScaleY="-1" />
+                            </TransformGroup>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                </Style >
+                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridBase}"/>
+                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridBase}"/>
+                <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource DataGridBase}"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Rolls" Binding="{Binding Augenzahl}"/>
@@ -58,5 +58,31 @@
                 </TransformGroup>
             </DataGrid.LayoutTransform>
         </DataGrid>
+        
+
+
+        
+        <Button HorizontalAlignment="Left" Margin="59,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+            <Image Source="{Binding ImageSource1}" Stretch="Fill">
+            </Image>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="126,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+            <Image Source="{Binding ImageSource2}" Stretch="Fill">
+            </Image>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="196,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+            <Image Source="{Binding ImageSource3}" Stretch="Fill">
+            </Image>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="268,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+            <Image Source="{Binding ImageSource4}" Stretch="Fill">
+            </Image>
+        </Button>
+        <Button HorizontalAlignment="Left" Margin="337,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+            <Image Source="{Binding ImageSource5}" Stretch="Fill">
+            </Image>
+        </Button>
+        
+
     </Grid>
 </Window>

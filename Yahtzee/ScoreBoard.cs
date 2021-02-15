@@ -8,67 +8,50 @@ namespace Yahtzee
 {
     public class ScoreBoard
     {
-        private readonly Dictionary<ICategory, int?> _newscores;
-        private int _totalpoints;
+        private readonly Dictionary<ICategory, int?> _scores;
         public string PlayerName { get; set; }
 
         public ScoreBoard()
         {
             var categoryList = InterfaceHandler();
-            _newscores = new Dictionary<ICategory, int?>();
+            _scores = new Dictionary<ICategory, int?>();
             foreach (var category in categoryList)
             {
-                _newscores.Add(category, null);
+                _scores.Add(category, null);
             }
-        }
-        
-        public void AddScore(YahtzeeCategory category, int points)
-        {
-            var convertedCategory = GetCategory(category);
-            if (_newscores[convertedCategory] != null)
-            {
-                if (points == 50)
-                {
-                    points = 100;
-                }
-                else
-                {
-                    throw new ScoreBoardException("Hast du schon ausgewählt");
-                }
-                
-            }
-
-            _totalpoints += points;
-            _newscores[convertedCategory] = points;
         }
 
         public void ScratchCategory(YahtzeeCategory category)
         {
-            var convertedCategory = GetCategory(category);
-            if (_newscores[convertedCategory] != null)
+            Category convertedCategory = GetCategory(category);
+            if (_scores[convertedCategory] == null)
+            {
+                _scores[convertedCategory] = 0;
+            }
+            else
             {
                 throw new ScoreBoardException("Du kannst nicht etwas Streichen was schon eine Nummer hat");
             }
-            _newscores[convertedCategory] = 0;
+            
         }
 
         public void Reset()
         {
-            foreach (var category in _newscores.Keys.ToList())
+            foreach (var category in _scores.Keys.ToList())
             {
-                _newscores[category] = null;
+                _scores[category] = null;
             }
         }
 
         public int? GetScoreForCategory(YahtzeeCategory yahtzeeCategory)
         {
             var category = GetCategory(yahtzeeCategory);
-            return _newscores[category];
+            return _scores[category];
         }
 
         public Category GetCategory(YahtzeeCategory yahtzeeCategory)
         {
-            foreach (var category in _newscores.Keys)
+            foreach (var category in _scores.Keys)
             {
                 if (category.YahtzeeCategory == yahtzeeCategory)
                 {
@@ -78,24 +61,42 @@ namespace Yahtzee
 
             return null;
         }
-       
 
         public void PutResultToBoard(int[] dice, YahtzeeCategory input)
         {
             var category = GetCategory(input);
-            if (category.IsMatch(dice))
+            if (category.IsMatch(dice) && _scores[category] == null)
             {
-                _newscores[category] = category.GetScore(dice);
+                _scores[category] = category.GetScore(dice);
+                var keyValuePair = _scores.First(x => x.Key.GetType() == typeof(Total));
+                _scores[keyValuePair.Key] = TotalPoints;
             }
             else
             {
-                ScratchCategory(input);
+                throw new ScoreBoardException("Da kriegst du keine Punkte mit deinem Wurf. Versuche es nochmal oder Scratch die Kategorie weg");
+            }
+        }
+
+        private int TotalPoints
+        {
+            get
+            {
+                var totalscore = 0;
+                foreach (int? point in _scores.Values)
+                {
+                    if (point.HasValue)
+                    {
+                        totalscore += point.Value;
+                    }
+                }
+
+                return totalscore;
             }
         }
 
         public Dictionary<ICategory, int?> GetNewScores()
         {
-            return _newscores;
+            return _scores;
         }
 
         private List<ICategory> InterfaceHandler()
@@ -118,15 +119,6 @@ namespace Yahtzee
             }
 
             return categories;
-        }
-
-        public void PrintScoreBoard()
-        {
-            Console.WriteLine(_totalpoints);
-            foreach (KeyValuePair<ICategory, int?> kvp in _newscores)
-            {
-                Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
-            } 
         }
     }
 }
