@@ -10,6 +10,7 @@ namespace Yahtzee
     {
         private readonly Dictionary<ICategory, int?> _scores;
         public string PlayerName { get; set; }
+        private static int _reRollTry;
 
         public ScoreBoard()
         {

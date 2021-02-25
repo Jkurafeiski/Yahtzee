@@ -54,6 +54,14 @@ namespace YahtzeeWPF
             get { return _scoreclickCommand; }
             set => _scoreclickCommand = value;
         }
+        public DelegateCommand<string> RerollButtonClickCommand
+        {
+            get { return _rerollclickCommand; }
+        }
+        public DelegateCommand<string> ResetButtonClickCommand
+        {
+            get { return _resetclickCommand; }
+        }
 
         public DelegateCommand<string> RerollButtonClickCommand
         {
