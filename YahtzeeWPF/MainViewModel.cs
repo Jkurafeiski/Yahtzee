@@ -57,15 +57,6 @@ namespace YahtzeeWPF
         public DelegateCommand<string> RerollButtonClickCommand
         {
             get { return _rerollclickCommand; }
-        }
-        public DelegateCommand<string> ResetButtonClickCommand
-        {
-            get { return _resetclickCommand; }
-        }
-
-        public DelegateCommand<string> RerollButtonClickCommand
-        {
-            get { return _rerollclickCommand; }
             set => _rerollclickCommand = value;
         }
 

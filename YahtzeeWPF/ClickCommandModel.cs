@@ -69,8 +69,7 @@ namespace YahtzeeWPF
 
         private YahtzeeCategory CategoryGetter()
         {
-            if (new InputParser().GetSelectedCategory(_mainViewModel._textBox1Input) != YahtzeeCategory.Empty &&
-                new InputParser().GetSelectedCategory(_mainViewModel._textBox1Input) != null)
+            if (new InputParser().GetSelectedCategory(_mainViewModel._textBox1Input) != YahtzeeCategory.Empty)
             {
                 var result = new InputParser().GetSelectedCategory(_mainViewModel._textBox1Input);
                 return result;

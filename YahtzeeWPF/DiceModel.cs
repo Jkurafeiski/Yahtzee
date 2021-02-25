@@ -69,7 +69,6 @@ namespace YahtzeeWPF
                     return _image6; 
                 default:
                     return null;
-                    break;
             }
         }
     }
