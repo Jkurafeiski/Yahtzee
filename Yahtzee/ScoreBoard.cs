@@ -62,14 +62,18 @@ namespace Yahtzee
             return null;
         }
 
-        public void PutResultToBoard(int[] dice, YahtzeeCategory input)
+        public void PutResultToBoard(int[] dice, ICategory category)
         {
-            var category = GetCategory(input);
-            if (category.IsMatch(dice) && _scores[category] == null)
+            var CategoryValue = _scores.First(x => x.Key.Name == category.Name);
+            var categoryKey = CategoryValue.Key;
+            if (categoryKey.IsMatch(dice) && _scores[categoryKey] == null)
             {
-                _scores[category] = category.GetScore(dice);
+                _scores[categoryKey] = categoryKey.GetScore(dice);
                 var keyValuePair = _scores.First(x => x.Key.GetType() == typeof(Total));
-                _scores[keyValuePair.Key] = TotalPoints;
+                //_scores[keyValuePair.Key] = 0;
+                //_scores[keyValuePair.Key] = TotalPoints;
+                var newTotalPoints = keyValuePair.Value.GetValueOrDefault(0) + categoryKey.GetScore(dice);
+                _scores[keyValuePair.Key] = newTotalPoints;
             }
             else
             {
@@ -77,22 +81,22 @@ namespace Yahtzee
             }
         }
 
-        private int TotalPoints
-        {
-            get
-            {
-                var totalscore = 0;
-                foreach (int? point in _scores.Values)
-                {
-                    if (point.HasValue)
-                    {
-                        totalscore += point.Value;
-                    }
-                }
+        //private int TotalPoints
+        //{
+        //    get
+        //    {
+        //        var totalscore = 0;
+        //        foreach (int? point in _scores.Values)
+        //        {
+        //            if (point.HasValue)
+        //            {
+        //                totalscore += point.Value;
+        //            }
+        //        }
 
-                return totalscore;
-            }
-        }
+        //        return totalscore;
+        //    }
+        //}
 
         public Dictionary<ICategory, int?> GetNewScores()
         {

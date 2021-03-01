@@ -1,7 +1,10 @@
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Yahtzee;
@@ -21,6 +24,11 @@ namespace YahtzeeWPF
         private DelegateCommand<string> _rerollclickCommand;
         private DelegateCommand<string> _resetclickCommand;
         private DelegateCommand<string> _scratchCommand;
+        private DelegateCommand<string> _image1Command;
+        private DelegateCommand<string> _image2Command;
+        private DelegateCommand<string> _image3Command; 
+        private DelegateCommand<string> _image4Command;
+        private DelegateCommand<string> _image5Command;
         private int[] _currentRoll;
         private readonly ClickCommandModel _clickCommandModel;
         public DiceModel _diceModel;
@@ -29,7 +37,28 @@ namespace YahtzeeWPF
         private ImageSource _image3;
         private ImageSource _image4;
         private ImageSource _image5;
+        private bool _dice1ButtonSelected;
+        private bool _dice2ButtonSelected;
+        private bool _dice3ButtonSelected;
+        private bool _dice4ButtonSelected;
+        private bool _dice5ButtonSelected;
+        private DelegateCommand<string> _dataGridRowClicker;
+        public DataGridCellInfo CellInfoGiver;
 
+        public DataGridCellInfo CellInfo
+        {
+            get { return CellInfoGiver; }
+            set
+            {
+                if (CellInfoGiver != value)
+                {
+                    CellInfoGiver = value;
+                    OnPropertyChanged("CellInfoGiver");
+                    //MessageBox.Show(string.Format("Column: {0}",
+                    //    CellInfoGiver.Column.DisplayIndex != null ? CellInfoGiver.Column.DisplayIndex.ToString() : "Index out of range!"));
+                }
+            }
+        }
 
         public string TextBox1Input
         {
@@ -48,7 +77,29 @@ namespace YahtzeeWPF
                 OnPropertyChanged(nameof(TextBox1Input));
             }
         }
+        public DelegateCommand<string> DataGridRowClicker
+        {
+            get
+            {
+                return _dataGridRowClicker;
+            }
+            set
+            {
+                if (_dataGridRowClicker != value)
+                {
+                    _dataGridRowClicker = value;
+                    OnPropertyChanged("DataGridRowClicker");
+                }
 
+                //if (!_dataGridRowClicker)
+                //{
+                //    _dataGridRowClicker = value;
+                //    new SolidColorBrush(Colors.White);
+                //    OnPropertyChanged("DataGridRowClicker");
+                //    OnPropertyChanged("Background");
+                //}
+            }
+        }
         public DelegateCommand<string> ScoreButtonclickCommand
         {
             get { return _scoreclickCommand; }
@@ -59,18 +110,145 @@ namespace YahtzeeWPF
             get { return _rerollclickCommand; }
             set => _rerollclickCommand = value;
         }
-
         public DelegateCommand<string> ResetButtonClickCommand
         {
             get { return _resetclickCommand; }
             set => _resetclickCommand = value;
         }
-
         public DelegateCommand<string> ScratchButtonClick
         {
             get { return _scratchCommand; }
             set => _scratchCommand = value;
         }
+        
+        public DelegateCommand<string> Image1ClickCommand
+        {
+            get { return _image1Command; }
+            set => _image1Command = value;
+        }
+        public DelegateCommand<string> Image2ClickCommand
+        {
+            get { return _image2Command; }
+            set => _image2Command = value;
+        }
+        public DelegateCommand<string> Image3ClickCommand
+        {
+            get { return _image3Command; }
+            set => _image3Command = value;
+        }
+        public DelegateCommand<string> Image4ClickCommand
+        {
+            get { return _image4Command; }
+            set => _image4Command = value;
+        }
+        public DelegateCommand<string> Image5ClickCommand
+        {
+            get { return _image5Command; }
+            set => _image5Command = value;
+        }
+
+        public bool Dice1ButtonSelected
+        {
+            get { return _dice1ButtonSelected; }
+            set
+            {
+                if (_dice1ButtonSelected)
+                {
+                    _dice1ButtonSelected = value;
+                    OnPropertyChanged("Dice1ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+
+                if (_dice1ButtonSelected == false)
+                {
+                    _dice1ButtonSelected = value;
+                    OnPropertyChanged("Dice1ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+            }
+        }
+        public bool Dice2ButtonSelected
+        {
+            get { return _dice2ButtonSelected; }
+            set
+            {
+                if (_dice2ButtonSelected)
+                {
+                    _dice2ButtonSelected = value;
+                    OnPropertyChanged("Dice2ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+               
+                if (_dice2ButtonSelected == false)
+                {
+                    _dice2ButtonSelected = value;
+                    OnPropertyChanged("Dice2ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+            }
+        }
+        public bool Dice3ButtonSelected
+        {
+            get { return _dice3ButtonSelected; }
+            set
+            {
+                if (_dice3ButtonSelected)
+                {
+                    _dice3ButtonSelected = value;
+                    OnPropertyChanged("Dice3ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+                
+                if (_dice3ButtonSelected == false)
+                {
+                    _dice3ButtonSelected = value;
+                    OnPropertyChanged("Dice3ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+            }
+        }
+        public bool Dice4ButtonSelected
+        {
+            get { return _dice4ButtonSelected; }
+            set
+            {
+                if (_dice4ButtonSelected)
+                {
+                    _dice4ButtonSelected = value;
+                    OnPropertyChanged("Dice4ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+                
+                if (_dice4ButtonSelected == false)
+                {
+                    _dice4ButtonSelected = value;
+                    OnPropertyChanged("Dice4ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+            }
+        }
+        public bool Dice5ButtonSelected
+        {
+            get { return _dice5ButtonSelected; }
+            set
+            {
+                if (_dice5ButtonSelected)
+                {
+                    _dice5ButtonSelected = value;
+                    OnPropertyChanged("Dice5ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+               
+                if (_dice5ButtonSelected == false)
+                {
+                    _dice5ButtonSelected = value;
+                    OnPropertyChanged("Dice5ButtonSelected");
+                    OnPropertyChanged("BorderBrush");
+                }
+            }
+        }
+
+       
 
         public ObservableCollection<YahtzeeModel> DataGridList
         {
@@ -203,7 +381,32 @@ namespace YahtzeeWPF
             _dataGridList = new ObservableCollection<YahtzeeModel>(scoreboardToYahtzeeModel);
         }
 
+        public string ReRollSwitches()
+        {
+            string diceToReroll = null;
+            if (Dice1ButtonSelected)
+            {
+                diceToReroll += "1";
+            }
+            if (Dice2ButtonSelected)
+            {
+                diceToReroll += "2";
+            }
+            if (Dice3ButtonSelected)
+            {
+                diceToReroll += "3";
+            }
+            if (Dice4ButtonSelected)
+            {
+                diceToReroll += "4";
+            }
+            if (Dice5ButtonSelected)
+            {
+                diceToReroll += "5";
+            }
 
+            return diceToReroll;
+        }
         public IEnumerable<DiceModel> DiceModels(int[] initializeDice)
         {
             var diceModels = initializeDice.Select(d => new DiceModel(this)

@@ -22,6 +22,10 @@ namespace YahtzeeWPF
 
         public int[] CheckReRollTimes(string userInput, int[] initializeDice)
         {
+            if (userInput == null)
+            {
+                throw new ScoreBoardException("Du musst schon ein würfel auswählen");
+            }
             var convertedRerollDices = new InputParser().GetDiceForReroll(userInput);
             var newInitializeDice = DiceReRollHandler(convertedRerollDices, initializeDice);
             return newInitializeDice;

@@ -23,17 +23,7 @@ namespace Yahtzee.Categories
 
         public override int GetScore(int[] dice)
         {
-            Array.Sort(dice);
-            var sum = 0;
-            if (dice[1] == dice[0] && dice[0] != dice[2] && dice[2] == dice[3] && dice[3] == dice[4])
-            {
-                sum = (dice[1] + dice[1]) + (dice[3] * 3);
-            }
-
-            if (dice[3] == dice[4] && dice[3] != dice[2] && dice[0] == dice[1] && dice[1] == dice[2])
-            {
-                sum = (dice[3] + dice[3]) + (dice[1] * 3);
-            }
+            var sum = 25;
 
             return sum;
         }

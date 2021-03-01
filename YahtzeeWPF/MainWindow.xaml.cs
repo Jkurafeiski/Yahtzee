@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace YahtzeeWPF
 {
@@ -10,6 +11,11 @@ namespace YahtzeeWPF
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void EventSetter_OnHandler(object sender, MouseButtonEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

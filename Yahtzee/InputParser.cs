@@ -38,8 +38,13 @@ namespace Yahtzee
 
         public int[] GetDiceForReroll(string userInput)
         {
+            char[] reRollDie = new char[]{};
             List<int> reRollDiceList = new List<int>();
-            var reRollDie = userInput.ToCharArray();
+            if (userInput != null)
+            {
+                reRollDie = userInput.ToCharArray();
+            }
+           
             foreach (var die in reRollDie)
             {
                 var charArrayConvertedToInt = (int)char.GetNumericValue(die);

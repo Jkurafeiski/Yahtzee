@@ -3,23 +3,73 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        x:Class="YahtzeeWPF.MainWindow"
+    x:Class="YahtzeeWPF.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="450">
+    <Window.Resources>
+        <Style x:Key="GreenToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="BorderBrush" Value="LightGray" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border 
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="3" 
+                            Padding="1"
+                        >
+                            <ContentPresenter 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center" 
+                            />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter 
+                                    Property="BorderBrush"
+                                    Value="LightGreen"
+                                />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter 
+                                    Property="BorderBrush"
+                                    Value="LightGray"
+                                />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
+    
+    
     <Grid x:Name="ScoreDataGrid">
         <DataGrid AutoGenerateColumns="False" IsReadOnly="True"
-                  ItemsSource="{Binding DataGridList}" Margin="0,0,0,70">
+                  ItemsSource="{Binding DataGridList}" 
+                  Margin="0,0,0,70" 
+                  CurrentCell="{Binding CellInfo, Mode=OneWayToSource}" 
+                  SelectionUnit="Cell"
+                  SelectionMode="Single">
+
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick"
+                              Command="{Binding DataGridRowClicker}">
+                </MouseBinding>
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Key" Binding="{Binding Category.Name, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Value" Binding="{Binding ScoreValue, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
         </DataGrid>
+
         <Menu VerticalAlignment="Bottom">
-            <Button Background="#FF32DE00" Content="Score berechnen" Command="{Binding ScoreButtonclickCommand}"/>
+            <Button Background="#FF32DE00" Content="Score berechnen" Command="{Binding ScoreButtonclickCommand}" />
             <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu rollen" Command="{Binding RerollButtonClickCommand}"/>
             <Button Content="Scratch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Background="#FFF9923B" Command="{Binding ScratchButtonClick}"/>
             <Button Background="#FFF90000" Content="Zurücksetzten" Command="{Binding ResetButtonClickCommand}"/>
         </Menu>
+
         <TextBox Name="TextBox1InputName" TextWrapping="Wrap" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="360,0,0,0" Text="{Binding TextBox1Input, UpdateSourceTrigger=PropertyChanged}" Height="20">
             <TextBox.RenderTransform>
                 <TransformGroup>
@@ -58,30 +108,39 @@
                 </TransformGroup>
             </DataGrid.LayoutTransform>
         </DataGrid>
-        
 
-
-        
-        <Button HorizontalAlignment="Left" Margin="59,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
-            <Image Source="{Binding ImageSource1}" Stretch="Fill">
-            </Image>
+        <Button HorizontalAlignment="Left" Margin="59,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image1ClickCommand}">
+            <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice1ButtonSelected}">
+                <Image Source="{Binding ImageSource1}" Stretch="Fill">
+                </Image>
+            </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="126,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+        <Button HorizontalAlignment="Left" Margin="126,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image2ClickCommand}">
+            <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice2ButtonSelected}">
             <Image Source="{Binding ImageSource2}" Stretch="Fill">
             </Image>
+            </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="196,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+        <Button HorizontalAlignment="Left" Margin="196,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image3ClickCommand}">
+            <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice3ButtonSelected}">
             <Image Source="{Binding ImageSource3}" Stretch="Fill">
             </Image>
+            </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="268,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+        <Button HorizontalAlignment="Left" Margin="268,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image4ClickCommand}">
+            <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice4ButtonSelected}">
             <Image Source="{Binding ImageSource4}" Stretch="Fill">
             </Image>
+            </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="337,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40">
+        <Button HorizontalAlignment="Left" Margin="337,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image5ClickCommand}">
+            <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice5ButtonSelected}">
             <Image Source="{Binding ImageSource5}" Stretch="Fill">
             </Image>
+            </ToggleButton>
         </Button>
+        
+       
         
 
     </Grid>
