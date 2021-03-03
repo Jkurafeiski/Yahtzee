@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using Yahtzee;
 using Yahtzee.Categories;
 
@@ -15,7 +11,6 @@ namespace YahtzeeWPF
         private MainViewModel _mainViewModel;
         private int reRollTry = 0;
         private DiceModel _dice;
-        private List<int> _diceList = new List<int>();
         private ICategory category;
 
         public ClickCommandModel(MainViewModel mainViewModel)
@@ -37,7 +32,9 @@ namespace YahtzeeWPF
             _mainViewModel.ResetButtonClickCommand = new DelegateCommand<string>(
                 (s) => { ResetClickHandler(); }
             );
-            _mainViewModel.ScratchButtonClick = ScratchClickHandler();
+            _mainViewModel.ScratchButtonClick = new DelegateCommand<string>(
+                (s) => { ScratchClickHandler(); }
+            );
             _mainViewModel.DataGridRowClicker = new DelegateCommand<string>(
                 (s) => { DataGridRowClickHandler(); }
             );
@@ -45,50 +42,42 @@ namespace YahtzeeWPF
 
         private void DataGridRowClickHandler()
         {
-            if (_mainViewModel.CellInfoGiver.Column.DisplayIndex == 0)
+            try
             {
-               //  MessageBox.Show(((YahtzeeModel)_mainViewModel.CellInfoGiver.Item).Category.Name.ToString());
-               category = ((YahtzeeModel) _mainViewModel.CellInfoGiver.Item).Category;
+                if (_mainViewModel.CellInfoGiver.Column.DisplayIndex == 0)
+                {
+                    //  MessageBox.Show(((YahtzeeModel)_mainViewModel.CellInfoGiver.Item).Category.Name.ToString());
+                    category = ((YahtzeeModel)_mainViewModel.CellInfoGiver.Item).Category;
+                    _mainViewModel.SelectedCategoryTextBox = "Ausgewählt: " + category.Name;
+                }
             }
-           
+            catch (ScoreBoardException e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void ScoreClickCommandHandler()
         {
             try
             {
-                _mainViewModel._scoreBoard.PutResultToBoard(_mainViewModel.CurrentRoll, category);
+                var convertedCategory = _mainViewModel._scoreBoard.CategoryConverter(category);
+                _mainViewModel._scoreBoard.PutResultToBoard(_mainViewModel.CurrentRoll, convertedCategory);
                 var updatedScoreboard = _mainViewModel._scoreBoard.GetNewScores();
                 var scoreboardToYahtzeeModel = _mainViewModel.ScoreboardToYahtzeeModel(updatedScoreboard);
                 _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(scoreboardToYahtzeeModel);
-                _mainViewModel.TextBoxClear();
                 reRollTry = 0;
+                _mainViewModel.SelectedCateGoryClearer();
                 _dice.InitializeDice();
             }
             catch (ArgumentException e)
             {
                 MessageBox.Show(e.Message);
-                _mainViewModel.TextBoxClear();
             }
             catch (ScoreBoardException e)
             {
                 MessageBox.Show(e.Message);
             }
-
-        }
-
-        private YahtzeeCategory CategoryGetter()
-        {
-            if (new InputParser().GetSelectedCategory(_mainViewModel._textBox1Input) != YahtzeeCategory.Empty)
-            {
-                var result = new InputParser().GetSelectedCategory(_mainViewModel._textBox1Input);
-                return result;
-            }
-            else
-            {
-                throw new ArgumentException("Falsche eingabe. Geb besser was richtiges ein");
-            }
-
 
         }
 
@@ -104,7 +93,7 @@ namespace YahtzeeWPF
                     _mainViewModel.DiceDataGrid =
                         new ObservableCollection<DiceModel>(_mainViewModel.DiceModels(_mainViewModel.CurrentRoll));
                     _mainViewModel.ImageChanger();
-                    _mainViewModel.TextBoxClear();
+                    _mainViewModel.SelectedCateGoryClearer();
                     BorderBrushReset();
                 }
                 else
@@ -132,10 +121,10 @@ namespace YahtzeeWPF
                 {
                     _mainViewModel._scoreBoard.Reset();
                     _dice.InitializeDice();
+                    _mainViewModel.SelectedCateGoryClearer();
                     _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(_mainViewModel.ScoreboardToYahtzeeModel(_mainViewModel._scoreBoard.GetNewScores()));
                     reRollTry = 0;
-                    _mainViewModel.TextBoxClear();
-                        break;
+                    break;
                 }
                 case MessageBoxResult.No:
                 {
@@ -144,28 +133,25 @@ namespace YahtzeeWPF
             }
         }
 
-        private DelegateCommand<string> ScratchClickHandler()
+        private void ScratchClickHandler()
         {
-            return new DelegateCommand<string>(
-                (s) =>
-                {
-                    try
-                    {
-                        var result = CategoryGetter();
-                        _mainViewModel._scoreBoard.ScratchCategory(result);
-                        _mainViewModel.TextBoxClear();
-                        _dice.InitializeDice();
-                        _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(_mainViewModel.ScoreboardToYahtzeeModel(_mainViewModel._scoreBoard.GetNewScores()));
-                        _mainViewModel.DiceDataGrid = new ObservableCollection<DiceModel>(_mainViewModel.DiceModels(_mainViewModel.CurrentRoll));
-                    }
-                    catch (ScoreBoardException e)
-                    {
-                        MessageBox.Show(e.Message);
-                        _mainViewModel.TextBoxClear();
-                    }
-                },
-                (s) => { return !string.IsNullOrEmpty(_mainViewModel._textBox1Input); }
-            );
+
+            try
+            {
+                var convertedCategory = _mainViewModel._scoreBoard.CategoryConverter(category);
+                _mainViewModel._scoreBoard.ScratchCategory(convertedCategory);
+                _dice.InitializeDice();
+                _mainViewModel.SelectedCateGoryClearer();
+                _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(
+                    _mainViewModel.ScoreboardToYahtzeeModel(_mainViewModel._scoreBoard.GetNewScores()));
+                _mainViewModel.DiceDataGrid =
+                    new ObservableCollection<DiceModel>(_mainViewModel.DiceModels(_mainViewModel.CurrentRoll));
+            }
+            catch (ScoreBoardException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
         }
 
         private void BorderBrushReset()

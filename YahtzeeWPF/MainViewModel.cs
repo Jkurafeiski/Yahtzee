@@ -19,7 +19,7 @@ namespace YahtzeeWPF
         public ScoreBoard _scoreBoard = new ScoreBoard();
         public ObservableCollection<YahtzeeModel> _dataGridList;
         private ObservableCollection<DiceModel> _diceDataGrid;
-        internal string _textBox1Input;
+        private string _selectedCategoryTextBox;
         private DelegateCommand<string> _scoreclickCommand;
         private DelegateCommand<string> _rerollclickCommand;
         private DelegateCommand<string> _resetclickCommand;
@@ -60,21 +60,16 @@ namespace YahtzeeWPF
             }
         }
 
-        public string TextBox1Input
+        public string SelectedCategoryTextBox
         {
-            get { return _textBox1Input; }
+            get { return _selectedCategoryTextBox; }
             set
             {
-                if (_textBox1Input != value)
+                if (_selectedCategoryTextBox != value)
                 {
-                    _textBox1Input = value;
-                    _scoreclickCommand.RaiseCanExecuteChanged();
-                    _rerollclickCommand.RaiseCanExecuteChanged();
-                    _resetclickCommand.RaiseCanExecuteChanged();
-                    _scratchCommand.RaiseCanExecuteChanged();
+                    _selectedCategoryTextBox = value;
+                    OnPropertyChanged(nameof(SelectedCategoryTextBox));
                 }
-
-                OnPropertyChanged(nameof(TextBox1Input));
             }
         }
         public DelegateCommand<string> DataGridRowClicker
@@ -91,13 +86,6 @@ namespace YahtzeeWPF
                     OnPropertyChanged("DataGridRowClicker");
                 }
 
-                //if (!_dataGridRowClicker)
-                //{
-                //    _dataGridRowClicker = value;
-                //    new SolidColorBrush(Colors.White);
-                //    OnPropertyChanged("DataGridRowClicker");
-                //    OnPropertyChanged("Background");
-                //}
             }
         }
         public DelegateCommand<string> ScoreButtonclickCommand
@@ -428,9 +416,9 @@ namespace YahtzeeWPF
             return scoreboardToYahtzeeModel;
         }
 
-        public void TextBoxClear()
+        public void SelectedCateGoryClearer()
         {
-            TextBox1Input = string.Empty;
+            SelectedCategoryTextBox = string.Empty;
         }
 
     }

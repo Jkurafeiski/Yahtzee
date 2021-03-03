@@ -21,12 +21,18 @@ namespace Yahtzee
             }
         }
 
-        public void ScratchCategory(YahtzeeCategory category)
+        public ICategory CategoryConverter(ICategory category)
         {
-            Category convertedCategory = GetCategory(category);
-            if (_scores[convertedCategory] == null)
+            var categoryValue = _scores.First(x => x.Key.Name == category.Name);
+            return categoryValue.Key;
+        }
+
+        public void ScratchCategory(ICategory category)
+        {
+            
+            if (_scores[category] == null)
             {
-                _scores[convertedCategory] = 0;
+                _scores[category] = 0;
             }
             else
             {
@@ -64,15 +70,13 @@ namespace Yahtzee
 
         public void PutResultToBoard(int[] dice, ICategory category)
         {
-            var CategoryValue = _scores.First(x => x.Key.Name == category.Name);
-            var categoryKey = CategoryValue.Key;
-            if (categoryKey.IsMatch(dice) && _scores[categoryKey] == null)
+            if (category.IsMatch(dice) && _scores[category] == null)
             {
-                _scores[categoryKey] = categoryKey.GetScore(dice);
+                _scores[category] = category.GetScore(dice);
                 var keyValuePair = _scores.First(x => x.Key.GetType() == typeof(Total));
                 //_scores[keyValuePair.Key] = 0;
                 //_scores[keyValuePair.Key] = TotalPoints;
-                var newTotalPoints = keyValuePair.Value.GetValueOrDefault(0) + categoryKey.GetScore(dice);
+                var newTotalPoints = keyValuePair.Value.GetValueOrDefault(0) + category.GetScore(dice);
                 _scores[keyValuePair.Key] = newTotalPoints;
             }
             else
@@ -80,24 +84,7 @@ namespace Yahtzee
                 throw new ScoreBoardException("Da kriegst du keine Punkte mit deinem Wurf. Versuche es nochmal oder Scratch die Kategorie weg");
             }
         }
-
-        //private int TotalPoints
-        //{
-        //    get
-        //    {
-        //        var totalscore = 0;
-        //        foreach (int? point in _scores.Values)
-        //        {
-        //            if (point.HasValue)
-        //            {
-        //                totalscore += point.Value;
-        //            }
-        //        }
-
-        //        return totalscore;
-        //    }
-        //}
-
+        
         public Dictionary<ICategory, int?> GetNewScores()
         {
             return _scores;

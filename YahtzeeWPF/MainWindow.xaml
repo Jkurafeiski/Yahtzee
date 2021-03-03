@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Class="YahtzeeWPF.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="450">
+        Title="MainWindow" Height="500" Width="450">
     <Window.Resources>
         <Style x:Key="GreenToggleButtonStyle" TargetType="ToggleButton">
             <Setter Property="BorderBrush" Value="LightGray" />
@@ -40,14 +40,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
     </Window.Resources>
-    
-    
+
+
     <Grid x:Name="ScoreDataGrid">
         <DataGrid AutoGenerateColumns="False" IsReadOnly="True"
                   ItemsSource="{Binding DataGridList}" 
-                  Margin="0,0,0,70" 
+                  Margin="0,0,0,22" 
                   CurrentCell="{Binding CellInfo, Mode=OneWayToSource}" 
                   SelectionUnit="Cell"
                   SelectionMode="Single">
@@ -70,78 +69,36 @@
             <Button Background="#FFF90000" Content="Zurücksetzten" Command="{Binding ResetButtonClickCommand}"/>
         </Menu>
 
-        <TextBox Name="TextBox1InputName" TextWrapping="Wrap" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Margin="360,0,0,0" Text="{Binding TextBox1Input, UpdateSourceTrigger=PropertyChanged}" Height="20">
-            <TextBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBox.RenderTransform>
-        </TextBox>
-        <DataGrid Margin="0,494,0,23" AutoGenerateColumns="False" ItemsSource="{Binding DiceDataGrid}" IsReadOnly="True" >
-            <DataGrid.Resources>
-                <Style x:Key="DataGridBase" TargetType="Control">
-                    <Setter Property="LayoutTransform">
-                        <Setter.Value>
-                            <TransformGroup>
-                                <RotateTransform Angle="-90" />
-                                <ScaleTransform ScaleX="1" ScaleY="-1" />
-                            </TransformGroup>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-                </Style >
-                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridBase}"/>
-                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DataGridBase}"/>
-                <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource DataGridBase}"/>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Rolls" Binding="{Binding Augenzahl}"/>
-            </DataGrid.Columns>
-
-            <DataGrid.LayoutTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="90" />
-                    <MatrixTransform Matrix="-1, 0, 0, 1, 0, 0" />
-                </TransformGroup>
-            </DataGrid.LayoutTransform>
-        </DataGrid>
-
-        <Button HorizontalAlignment="Left" Margin="59,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image1ClickCommand}">
+        <Button HorizontalAlignment="Left" Margin="59,25,0,25" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image1ClickCommand}">
             <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice1ButtonSelected}">
                 <Image Source="{Binding ImageSource1}" Stretch="Fill">
                 </Image>
             </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="126,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image2ClickCommand}">
+        <Button HorizontalAlignment="Left" Margin="126,25,0,25" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image2ClickCommand}">
             <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice2ButtonSelected}">
-            <Image Source="{Binding ImageSource2}" Stretch="Fill">
-            </Image>
+                <Image Source="{Binding ImageSource2}" Stretch="Fill">
+                </Image>
             </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="196,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image3ClickCommand}">
+        <Button HorizontalAlignment="Left" Margin="196,25,0,25" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image3ClickCommand}">
             <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice3ButtonSelected}">
-            <Image Source="{Binding ImageSource3}" Stretch="Fill">
-            </Image>
+                <Image Source="{Binding ImageSource3}" Stretch="Fill">
+                </Image>
             </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="268,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image4ClickCommand}">
+        <Button HorizontalAlignment="Left" Margin="268,25,0,25" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image4ClickCommand}">
             <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice4ButtonSelected}">
-            <Image Source="{Binding ImageSource4}" Stretch="Fill">
-            </Image>
+                <Image Source="{Binding ImageSource4}" Stretch="Fill">
+                </Image>
             </ToggleButton>
         </Button>
-        <Button HorizontalAlignment="Left" Margin="337,70,0,70" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image5ClickCommand}">
+        <Button HorizontalAlignment="Left" Margin="337,25,0,25" VerticalAlignment="Bottom" Height="40" Width="40" Command="{Binding Image5ClickCommand}">
             <ToggleButton Style= "{StaticResource GreenToggleButtonStyle}" IsChecked="{Binding Dice5ButtonSelected}">
-            <Image Source="{Binding ImageSource5}" Stretch="Fill">
-            </Image>
+                <Image Source="{Binding ImageSource5}" Stretch="Fill">
+                </Image>
             </ToggleButton>
         </Button>
-        
-       
-        
-
+        <TextBox x:Name="Selected_Category" HorizontalAlignment="Center" Margin="0,334,0,0" Text="{Binding SelectedCategoryTextBox}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" IsReadOnly="True"/>
     </Grid>
 </Window>
