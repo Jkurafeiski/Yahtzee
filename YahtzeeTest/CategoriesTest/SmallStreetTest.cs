@@ -1,9 +1,9 @@
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Yahtzee.Categories;
 
 namespace YahtzeeTest.CategoriesTest
 {
-    [TestFixture]
+    [TestClass]
     public class SmallStreetTest
     {
         private SmallStreet _sut;

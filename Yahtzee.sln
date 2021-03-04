@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YahtzeeWPF", "YahtzeeWPF\Ya
 		{CF294C11-54EE-447E-B8E5-C2567919BE30} = {CF294C11-54EE-447E-B8E5-C2567919BE30}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YahtzeeSmallSteetTest", "YahtzeeSmallSteetTest\YahtzeeSmallSteetTest.csproj", "{87774E3F-B1CE-4002-BA69-51F55A17BBEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{7DA0434B-9E21-43F0-87A2-833609A7F30E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DA0434B-9E21-43F0-87A2-833609A7F30E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DA0434B-9E21-43F0-87A2-833609A7F30E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87774E3F-B1CE-4002-BA69-51F55A17BBEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87774E3F-B1CE-4002-BA69-51F55A17BBEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87774E3F-B1CE-4002-BA69-51F55A17BBEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87774E3F-B1CE-4002-BA69-51F55A17BBEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

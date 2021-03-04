@@ -25,8 +25,8 @@ namespace Yahtzee.Categories
         public override bool IsMatch(int[] dice)
         {
             Array.Sort(dice);
-            if (dice[0] == 1 && dice[1] == 2 && dice[2] == 3 && dice[3] == 4 && dice[4] == 5 || 
-                dice[0] == 2 && dice[1] == 3 && dice[2] == 4 && dice[3] == 5 && dice[4] == 6)
+            int n = dice[0];
+            if (dice[1] == n + 1 && dice[2] == n + 2 && dice[3] == n + 3 && dice[4] == n+4)
             {
                 return true;
             }
