@@ -70,9 +70,13 @@ namespace Yahtzee
                 _scores[keyValuePair.Key] = newTotalPoints;
                 TotalScore = newTotalPoints;
             }
-            else
+            else if (!category.IsMatch(dice))
             {
-                throw new ScoreBoardException("Da kriegst du keine Punkte mit deinem Wurf. Versuche es nochmal oder Scratch die Kategorie weg");
+                throw new ScoreBoardException("Du kriegst keine Punkte für diese Kategorie. Wenn du sie Streichen willst bitte benutzt den 'Streichen' Knopf");
+            }
+            else if (_scores[category] != null)
+            { 
+                throw new ScoreBoardException("Du hast diese Kategorie schon ausgewählt");
             }
         }
         
