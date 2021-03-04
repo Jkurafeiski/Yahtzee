@@ -12,6 +12,7 @@ namespace YahtzeeWPF
         private int reRollTry = 0;
         private DiceModel _dice;
         private ICategory category;
+        private int _endGame;
 
         public ClickCommandModel(MainViewModel mainViewModel)
         {
@@ -38,6 +39,14 @@ namespace YahtzeeWPF
             _mainViewModel.DataGridRowClicker = new DelegateCommand<string>(
                 (s) => { DataGridRowClickHandler(); }
             );
+        }
+
+        private void EndGame()
+        {
+            if (_endGame > 8)
+            {
+                MessageBox.Show("Du hast " + _mainViewModel._scoreBoard.TotalScore.ToString() + " Punkte");
+            }
         }
 
         private void DataGridRowClickHandler()
@@ -67,6 +76,8 @@ namespace YahtzeeWPF
                 var scoreboardToYahtzeeModel = _mainViewModel.ScoreboardToYahtzeeModel(updatedScoreboard);
                 _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(scoreboardToYahtzeeModel);
                 reRollTry = 0;
+                _endGame++;
+                EndGame();
                 _mainViewModel.SelectedCateGoryClearer();
                 _dice.InitializeDice();
             }
@@ -146,6 +157,8 @@ namespace YahtzeeWPF
                     _mainViewModel.ScoreboardToYahtzeeModel(_mainViewModel._scoreBoard.GetNewScores()));
                 _mainViewModel.DiceDataGrid =
                     new ObservableCollection<DiceModel>(_mainViewModel.DiceModels(_mainViewModel.CurrentRoll));
+                _endGame++;
+                EndGame();
             }
             catch (ScoreBoardException e)
             {

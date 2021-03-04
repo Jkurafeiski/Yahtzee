@@ -10,6 +10,7 @@ namespace Yahtzee
     {
         private readonly Dictionary<ICategory, int?> _scores;
         public string PlayerName { get; set; }
+        public int TotalScore = 0;
 
         public ScoreBoard()
         {
@@ -23,8 +24,16 @@ namespace Yahtzee
 
         public ICategory CategoryConverter(ICategory category)
         {
-            var categoryValue = _scores.First(x => x.Key.Name == category.Name);
-            return categoryValue.Key;
+            try
+            {
+                var categoryValue = _scores.First(x => x.Key.Name == category.Name);
+                return categoryValue.Key;
+            }
+            catch (KeyNotFoundException e)
+            {
+                throw new ScoreBoardException("Du musst etwas anklicken");
+            }
+            
         }
 
         public void ScratchCategory(ICategory category)
@@ -78,6 +87,7 @@ namespace Yahtzee
                 //_scores[keyValuePair.Key] = TotalPoints;
                 var newTotalPoints = keyValuePair.Value.GetValueOrDefault(0) + category.GetScore(dice);
                 _scores[keyValuePair.Key] = newTotalPoints;
+                TotalScore = newTotalPoints;
             }
             else
             {
