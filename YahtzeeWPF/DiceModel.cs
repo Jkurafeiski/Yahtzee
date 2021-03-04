@@ -63,7 +63,7 @@ namespace YahtzeeWPF
                     var _image3 = new BitmapImage(new Uri(Path.Combine(outPutDirectory, "DiceImages/Dice3.png"), UriKind.RelativeOrAbsolute));
                     return _image3; 
                 case 4:
-                    var _image4 = new BitmapImage(new Uri(Path.Combine(outPutDirectory, "DiceImages/Dice4.jpg"), UriKind.RelativeOrAbsolute));
+                    var _image4 = new BitmapImage(new Uri(Path.Combine(outPutDirectory, "DiceImages/Dice4.png"), UriKind.RelativeOrAbsolute));
                     return _image4; 
                 case 5:
                     var _image5 = new BitmapImage(new Uri(Path.Combine(outPutDirectory, "DiceImages/Dice5.png"), UriKind.RelativeOrAbsolute));

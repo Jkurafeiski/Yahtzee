@@ -63,9 +63,9 @@
         </DataGrid>
 
         <Menu VerticalAlignment="Bottom">
-            <Button Background="#FF32DE00" Content="Score berechnen" Command="{Binding ScoreButtonclickCommand}" />
-            <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu rollen" Command="{Binding RerollButtonClickCommand}"/>
-            <Button Content="Scratch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Background="#FFF9923B" Command="{Binding ScratchButtonClick}"/>
+            <Button Background="#FF32DE00" Content="Summe berechnen" Command="{Binding ScoreButtonclickCommand}" />
+            <Button Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Content="Neu Würfeln" Command="{Binding RerollButtonClickCommand}"/>
+            <Button Content="Streichen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Background="#FFF9923B" Command="{Binding ScratchButtonClick}"/>
             <Button Background="#FFF90000" Content="Zurücksetzten" Command="{Binding ResetButtonClickCommand}"/>
         </Menu>
 

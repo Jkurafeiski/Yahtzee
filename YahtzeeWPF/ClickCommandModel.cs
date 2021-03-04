@@ -43,7 +43,7 @@ namespace YahtzeeWPF
 
         private void EndGame()
         {
-            if (_endGame > 8)
+            if (_endGame > 12)
             {
                 MessageBox.Show("Du hast " + _mainViewModel._scoreBoard.TotalScore.ToString() + " Punkte");
             }
@@ -75,11 +75,14 @@ namespace YahtzeeWPF
                 var updatedScoreboard = _mainViewModel._scoreBoard.GetNewScores();
                 var scoreboardToYahtzeeModel = _mainViewModel.ScoreboardToYahtzeeModel(updatedScoreboard);
                 _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(scoreboardToYahtzeeModel);
+                _mainViewModel.DiceDataGrid =
+                    new ObservableCollection<DiceModel>(_mainViewModel.DiceModels(_mainViewModel.CurrentRoll));
                 reRollTry = 0;
                 _endGame++;
                 EndGame();
                 _mainViewModel.SelectedCateGoryClearer();
                 _dice.InitializeDice();
+                BorderBrushReset();
             }
             catch (ArgumentException e)
             {
@@ -133,9 +136,12 @@ namespace YahtzeeWPF
                     _mainViewModel._scoreBoard.Reset();
                     _dice.InitializeDice();
                     _mainViewModel.SelectedCateGoryClearer();
-                    _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(_mainViewModel.ScoreboardToYahtzeeModel(_mainViewModel._scoreBoard.GetNewScores()));
-                    reRollTry = 0;
-                    break;
+                    _mainViewModel.DataGridList = new ObservableCollection<YahtzeeModel>(_mainViewModel.ScoreboardToYahtzeeModel(_mainViewModel._scoreBoard.GetNewScores())); 
+                    _mainViewModel.DiceDataGrid =
+                        new ObservableCollection<DiceModel>(_mainViewModel.DiceModels(_mainViewModel.CurrentRoll));
+                        reRollTry = 0;
+                        BorderBrushReset();
+                        break;
                 }
                 case MessageBoxResult.No:
                 {
@@ -159,6 +165,7 @@ namespace YahtzeeWPF
                     new ObservableCollection<DiceModel>(_mainViewModel.DiceModels(_mainViewModel.CurrentRoll));
                 _endGame++;
                 EndGame();
+                BorderBrushReset();
             }
             catch (ScoreBoardException e)
             {

@@ -58,25 +58,6 @@ namespace Yahtzee
             }
         }
 
-        public int? GetScoreForCategory(YahtzeeCategory yahtzeeCategory)
-        {
-            var category = GetCategory(yahtzeeCategory);
-            return _scores[category];
-        }
-
-        public Category GetCategory(YahtzeeCategory yahtzeeCategory)
-        {
-            foreach (var category in _scores.Keys)
-            {
-                if (category.YahtzeeCategory == yahtzeeCategory)
-                {
-                    return (Category) category;
-                }
-            }
-
-            return null;
-        }
-
         public void PutResultToBoard(int[] dice, ICategory category)
         {
             if (category.IsMatch(dice) && _scores[category] == null)

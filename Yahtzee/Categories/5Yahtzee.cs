@@ -8,23 +8,24 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "5. Kniffel";
-            }
-        }
-
-        public override YahtzeeCategory YahtzeeCategory
-        {
-            get
-            {
-                return YahtzeeCategory.Yahtzee;
+                return "Kniffel";
             }
         }
 
         public override int GetScore(int[] dice)
         {
+            var counter = 0;
             if (IsMatch(dice))
             {
-                return 50;
+                if (counter >= 1)
+                {
+                    return 100;
+                }
+                else
+                {
+                    counter++;
+                    return 50;
+                }
             }
 
             return 0;

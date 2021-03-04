@@ -8,15 +8,7 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "1. Summe";
-            }
-        }
-
-        public override YahtzeeCategory YahtzeeCategory
-        {
-            get
-            {
-                return YahtzeeCategory.Sum;
+                return "Chance";
             }
         }
 

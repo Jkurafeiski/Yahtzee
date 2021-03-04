@@ -8,15 +8,7 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "8. Große Straße";
-            }
-        }
-
-        public override YahtzeeCategory YahtzeeCategory
-        {
-            get
-            {
-                return YahtzeeCategory.LargeStreet;
+                return "Große Straße";
             }
         }
 
@@ -24,7 +16,7 @@ namespace Yahtzee.Categories
         {
             if (IsMatch(dice))
             {
-                return 20;
+                return 40;
             }
 
             return 0;
@@ -33,7 +25,8 @@ namespace Yahtzee.Categories
         public override bool IsMatch(int[] dice)
         {
             Array.Sort(dice);
-            if (dice[0] == 2 && dice[1] == 3 && dice[2] == 4 && dice[3] == 5 && dice[4] == 6)
+            if (dice[0] == 1 && dice[1] == 2 && dice[2] == 3 && dice[3] == 4 && dice[4] == 5 || 
+                dice[0] == 2 && dice[1] == 3 && dice[2] == 4 && dice[3] == 5 && dice[4] == 6)
             {
                 return true;
             }

@@ -8,17 +8,10 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "3. Drilling";
+                return "Drilling";
             }
         }
 
-        public override YahtzeeCategory YahtzeeCategory
-        {
-            get
-            {
-                return YahtzeeCategory.ThreeOfAKind;
-            }
-        }
 
         public override int GetScore(int[] dice)
         {

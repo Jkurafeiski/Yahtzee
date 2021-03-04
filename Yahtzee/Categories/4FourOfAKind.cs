@@ -8,15 +8,7 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "4. Vierling";
-            }
-        }
-
-        public override YahtzeeCategory YahtzeeCategory
-        {
-            get
-            {
-                return YahtzeeCategory.FourOfAKind;
+                return "Vierling";
             }
         }
 

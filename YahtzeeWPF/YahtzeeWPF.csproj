@@ -10,7 +10,7 @@
       <None Remove="DiceImages\Dice1.png" />
       <None Remove="DiceImages\Dice2.png" />
       <None Remove="DiceImages\Dice3.png" />
-      <None Remove="DiceImages\Dice4.jpg" />
+      <None Remove="DiceImages\Dice4.png" />
       <None Remove="DiceImages\Dice5.png" />
       <None Remove="DiceImages\Dice6.png" />
     </ItemGroup>
@@ -29,7 +29,7 @@
       <Content Include="DiceImages\Dice3.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Include="DiceImages\Dice4.jpg">
+      <Content Include="DiceImages\Dice4.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <Content Include="DiceImages\Dice5.png">

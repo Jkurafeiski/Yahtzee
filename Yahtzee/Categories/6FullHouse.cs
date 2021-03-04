@@ -9,15 +9,7 @@ namespace Yahtzee.Categories
         {
             get
             {
-                return "6. Full House";
-            }
-        }
-
-        public override YahtzeeCategory YahtzeeCategory
-        {
-            get
-            {
-                return YahtzeeCategory.FullHouse;
+                return "Volles Haus";
             }
         }
 
